@@ -1,0 +1,68 @@
+.Location {
+  font-family: customHelvetica;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  flex-wrap: wrap;
+}
+
+.profile_pic_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile_pic {
+  display: block;
+  border-radius: 50%;
+  border: inset 15px #0079bf;
+}
+.Username {
+  font-family: customHelvetica;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  flex-wrap: wrap;
+}
+
+.header__logo {
+  width: 110px;
+}
+.popularSongs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.home_card_title {
+  font-size: 25px;
+}
+
+.dataCard_home {
+  max-width: 80%;
+  min-height: 300px;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile_card {
+  font-family: customHelvetica;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding-top: 50px;
+  padding-bottom: 30px;
+  min-width: 400px;
+  min-height: 400px;
+  margin: 30px;
+}
+.user_info {
+}
