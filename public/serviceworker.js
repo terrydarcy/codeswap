@@ -6,6 +6,7 @@ const urlsToCache = ["index.html", "offline.html"];
 // Listen for requests
 
 // Activate the SW
+
 const self = this;
 self.addEventListener("install", (event) => {
   event.waitUntil(

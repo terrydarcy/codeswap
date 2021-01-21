@@ -41,7 +41,6 @@ function CreateAccount() {
         setEmail("");
         setPassword("");
         setDisplayName("");
-
         history.push("/");
       } else {
         // No user is signed in.
