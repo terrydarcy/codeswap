@@ -1,108 +1,34 @@
 .headerContainer {
+  height: 60px;
+  background-color: #161b22;
+  -webkit-box-shadow: 0px 0px 9px 3px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 0px 9px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 9px 3px rgba(0, 0, 0, 0.3);
   display: flex;
-  flex-direction: column;
-  flex-flow: row;
-  width: 100%;
-  background-color: #0079bf;
-  position: fixed;
-  z-index: 10;
-  top: 0px;
-  height: 55px;
-}
-a {
-  padding: 0;
-}
-.headerSearch {
-  flex: 3;
-  display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  color: #e6e6e6;
 }
-
-.headerNavigation {
+.header_logo_container {
+  display: flex;
+  margin-left: 10px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
   flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding-right: 1%;
+  height: 100%;
 }
-.searchTextArea {
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  width: 90%;
+.header_nav_container {
+  flex: 1;
   height: 100%;
 }
 
-.headerLogo {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  overflow: visible;
-  margin-left: 10px;
+.header_text_color_mod {
+  color: #d9215a;
 }
-
-.searchBar {
-  width: 80%;
-  min-width: 110px;
-  height: 37px;
-  background-color: white;
-  border-radius: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  background-color: #008fe1;
-}
-
-.searchIconContainer {
-  padding-left: 10px;
-}
-.inputField {
-  font-family: customHelvetica;
-  font-size: 11pt;
-  border-width: 0px;
-  width: 80%;
-  text-align: left;
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  height: 80%;
-  color: white;
-
-  background-color: #008fe1;
-}
-input::placeholder {
-  color: white;
-}
-input::-webkit-input-placeholder {
-  color: white;
-}
-input:-moz-placeholder {
-  color: white;
-}
-input:focus {
-  outline: none;
-}
-
-.header__logo_header {
-  content: url("../../res/logo_icon.png");
-  height: 40px;
-  padding: 0px;
-}
-@media (max-width: 600px) {
-  .header__logo_header {
-    content: url("../../res/icon.png");
-    height: 40px;
-    padding: 0px;
-  }
-}
-.far.fa-heart,
-.far.fa-user-circle {
-  color: white;
-}
-
-.header-links {
+.homelink {
   text-decoration: none;
-  color: black;
+  color: #e6e6e6;
+  margin-bottom: 5px;
 }

@@ -12,5 +12,6 @@
 .app_body {
   flex: 15;
   width: 100%;
-  background-color: #f0f2f5;
+  background-color: #0d1117;
+  color: #e6e6e6;
 }

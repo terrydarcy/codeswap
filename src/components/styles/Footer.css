@@ -2,11 +2,26 @@
   text-align: center;
   margin: 20px;
   font-size: 11pt;
-  color: darkgrey;
+  color: #3c3f46;
 }
 
 .footerFlex {
   flex: 1;
   width: 100%;
   flex-shrink: 0;
+  background-color: #0d1117;
+}
+
+hr {
+  border: none;
+  height: 1px;
+  /* Set the hr color */
+  color: #21262d; /* old IE */
+  background-color: #21262d; /* Modern Browsers */
+}
+
+.footer_link {
+  color: #3c3f46;
+  text-decoration: none;
+  cursor: pointer;
 }

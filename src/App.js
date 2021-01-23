@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
-import SplashScreen from "./pages/SplashScreen";
+import Home from "./pages/Home";
+import Header from "./components/Header";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import UserProvider from "./providers/UserProvider";
 import Footer from "./components/Footer";
@@ -16,9 +17,10 @@ function App() {
       <Provider store={store}>
         <div className="app">
           <div className="app_body">
+            <Header />
             <Router>
               <Switch>
-                <Route path="/" exact component={SplashScreen} />
+                <Route path="/" exact component={Home} />
               </Switch>
             </Router>
           </div>
