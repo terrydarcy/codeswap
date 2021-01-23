@@ -3,13 +3,13 @@ import "firebase/auth";
 import "firebase/firestore";
 
 var firebaseConfig = {
-  apiKey: "AIzaSyD9JtiQAg1S4D_Z81bhT9dUliNZZtYZjrQ",
-  authDomain: "cashgroup-3f175.firebaseapp.com",
-  projectId: "cashgroup-3f175",
-  storageBucket: "cashgroup-3f175.appspot.com",
-  messagingSenderId: "1070156153858",
-  appId: "1:1070156153858:web:acc8b0c5768f2a1876131b",
-  measurementId: "G-NK68SZ749L",
+  apiKey: "AIzaSyBeKgolfsemLIN9DeU1k_bW-ktYQtv2e-4",
+  authDomain: "codeswap-23d74.firebaseapp.com",
+  projectId: "codeswap-23d74",
+  storageBucket: "codeswap-23d74.appspot.com",
+  messagingSenderId: "286165891638",
+  appId: "1:286165891638:web:f6beee6448dae417cef697",
+  measurementId: "G-1RM2GHTJ60",
 };
 
 const fire = firebase.initializeApp(firebaseConfig);

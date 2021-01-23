@@ -9,6 +9,45 @@
   align-items: center;
   justify-content: flex-start;
   color: #e6e6e6;
+  position: fixed;
+  z-index: 10;
+  top: 0px;
+  width: 100%;
+}
+.header_search_container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex: 1;
+  height: 100%;
+}
+
+.search_bar {
+  width: 100%;
+  height: 30px;
+  background-color: #0d1117;
+  border-radius: 15px;
+}
+
+.search_bar > input {
+  background-color: #0d1117;
+  border: none;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 90%;
+  font-family: "Consolas";
+  height: 100%;
+  color: #e6e6e6;
+  border-radius: 15px;
+}
+.search_bar > input ::placeholder {
+  background-color: #0d1117;
+  border-radius: 15px;
+}
+.search_bar > input ::selection {
+  background-color: #0d1117;
+  border-radius: 15px;
 }
 .header_logo_container {
   display: flex;
@@ -19,11 +58,25 @@
   flex: 1;
   height: 100%;
 }
+
 .header_nav_container {
   flex: 1;
   height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 15px;
 }
 
+.header_logo {
+  font-size: 30px;
+}
+@media (max-width: 600px) {
+  .header_logo {
+    font-size: 20px;
+  }
+}
 .header_text_color_mod {
   color: #d9215a;
 }
@@ -31,4 +84,12 @@
   text-decoration: none;
   color: #e6e6e6;
   margin-bottom: 5px;
+}
+.headerButton {
+  font-family: "consolas";
+}
+
+#header_profile_button {
+  color: #e6e6e6;
+  font-size: 30;
 }

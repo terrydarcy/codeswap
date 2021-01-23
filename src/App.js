@@ -16,8 +16,8 @@ function App() {
     <UserProvider>
       <Provider store={store}>
         <div className="app">
+          <Header />
           <div className="app_body">
-            <Header />
             <Router>
               <Switch>
                 <Route path="/" exact component={Home} />
