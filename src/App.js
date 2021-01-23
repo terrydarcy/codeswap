@@ -15,17 +15,17 @@ function App() {
   return (
     <UserProvider>
       <Provider store={store}>
-        <div className="app">
-          <Header />
-          <div className="app_body">
-            <Router>
-              <Switch>
+        <Router>
+          <Switch>
+            <div className="app">
+              <Header />
+              <div className="app_body">
                 <Route path="/" exact component={Home} />
-              </Switch>
-            </Router>
-          </div>
-          <Footer />
-        </div>
+              </div>
+              <Footer />
+            </div>
+          </Switch>
+        </Router>
       </Provider>
     </UserProvider>
   );
