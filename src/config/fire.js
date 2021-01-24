@@ -18,7 +18,7 @@ export const auth = firebase.auth();
 
 export const firestore = firebase.firestore();
 
-export const checkLogin = () => {
+const checkLogin = () => {
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       return user;
@@ -28,23 +28,23 @@ export const checkLogin = () => {
   });
 };
 
-export const generateUserDocument = async (user, additionalData) => {
+export const generateUserDocument = async (user, dName) => {
   if (!user) return;
   const userRef = firebase.firestore().doc(`Users/${user.uid}`);
-  const snapshot = await userRef.get();
-
-  if (!snapshot.exists) {
-    const { email, displayName, photoURL } = user;
-    //console.log("at document creation: ", displayName, photoURL);
-    try {
-      await userRef.set({
-        email,
-        displayName,
-        photoURL,
-        ...additionalData,
-      });
-    } catch (error) {
-      console.error("Error creating user document", error);
+  const snapshot = userRef.get();
+  const seed = Math.floor(Math.random() * Math.floor(5000));
+  const photoURL = "https://picsum.photos/seed/" + seed + "/200";
+  if (dName != undefined) {
+    if (!snapshot.exists) {
+      try {
+        await userRef.set({
+          email: user.email,
+          displayName: dName,
+          photoURL: photoURL,
+        });
+      } catch (error) {
+        console.error("Error creating user document", error);
+      }
     }
   }
   return getUserDocument(user.uid);

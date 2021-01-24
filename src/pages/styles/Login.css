@@ -1,27 +1,30 @@
-.input_login {
-  font-size: 16px;
-  border-width: 0px;
-  width: 100%;
-  text-align: left;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  background-color: #f0f2f5;
-}
-
-.error {
-  color: red;
-}
-
 .login {
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   flex-direction: column;
-  margin-left: 30px;
-  margin-right: 30px;
-  font-family: "Quicksand", sans-serif;
+}
+.error {
+  color: #d9215a;
+}
+.input_login {
+  font-size: 13px;
+  border-width: 0px;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-family: "Consolas";
+  border-radius: 10px;
+  margin-bottom: 10px;
+  padding-left: 10px;
+  background-color: #161b22;
+  color: #e6e6e6;
+}
+.login_container {
+  width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }

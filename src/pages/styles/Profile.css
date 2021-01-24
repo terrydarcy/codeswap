@@ -1,5 +1,4 @@
 .Location {
-  font-family: customHelvetica;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,10 +15,9 @@
 .profile_pic {
   display: block;
   border-radius: 50%;
-  border: inset 15px #0079bf;
+  border: inset 15px #42c062;
 }
 .Username {
-  font-family: customHelvetica;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -53,7 +51,6 @@
 }
 
 .profile_card {
-  font-family: customHelvetica;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -63,6 +60,8 @@
   min-width: 400px;
   min-height: 400px;
   margin: 30px;
+  color: #e6e6e6;
+  background-color: #161b22;
 }
 .user_info {
 }

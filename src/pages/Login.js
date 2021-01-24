@@ -43,23 +43,25 @@ function Login() {
 
   return (
     <div className="login">
-      <h3 style={{ textAlign: "center" }}>Login</h3>
+      <div className="login_container">
+        <h2 style={{ textAlign: "center" }}>Login</h2>
 
-      <input className="input_login" placeholder="Email" type="text" id="email" onChange={(e) => setEmail(e.target.value)}></input>
-      <br></br>
-      <input className="input_login" id="password" placeholder="Password" type="password" onChange={(e) => setPassword(e.target.value)}></input>
+        <input className="input_login" placeholder="Email" type="text" id="email" onChange={(e) => setEmail(e.target.value)}></input>
+        <br></br>
+        <input className="input_login" id="password" placeholder="Password" type="password" onChange={(e) => setPassword(e.target.value)}></input>
 
-      <br></br>
-      <div id="error" className="error"></div>
-      <br></br>
+        <br></br>
+        <div id="error" className="error"></div>
+        <br></br>
 
-      <div style={{ display: "flex", textAlign: "center", justifyContent: "center", alignItems: "center", marginBottom: 50 }}>
-        <Button className="login_buttons" onClick={(e) => logInWithEmailAndPassword(e, email, password)} variant="contained" size="large" style={{ backgroundColor: "#42C062", color: "white", marginRight: 20, padding: 10 }}>
-          Log In
-        </Button>
-
-        <Button variant="contained" size="small" style={{ textAlign: "center", padding: 5, backgroundColor: "#0079BF", color: "white" }} onClick={() => toggleLoginButton()}>
-          Create Account
+        <div style={{ display: "flex", textAlign: "center", justifyContent: "center", alignItems: "center" }}>
+          <Button className="login_buttons" onClick={(e) => logInWithEmailAndPassword(e, email, password)} variant="contained" size="large" style={{ backgroundColor: "#42C062", color: "#e6e6e6", padding: 5 }}>
+            Log In
+          </Button>
+        </div>
+        <h4>or</h4>
+        <Button variant="contained" size="small" style={{ textAlign: "center", padding: 5, backgroundColor: "#0079BF", color: "#e6e6e6" }} onClick={() => history.push("/Createaccount")}>
+          Create New Account
         </Button>
       </div>
     </div>

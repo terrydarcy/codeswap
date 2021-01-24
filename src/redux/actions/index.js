@@ -28,3 +28,9 @@ export const toggleLogin = (id) => {
     payload: id,
   };
 };
+export const setUserLogin = (data) => {
+  return {
+    type: "user",
+    payload: data,
+  };
+};

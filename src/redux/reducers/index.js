@@ -4,6 +4,7 @@ import YoutubeVideoIDReducer from "./YoutubeVideoIDReducer";
 import { combineReducers } from "redux";
 import SpotifyIDReducer from "./SpotifyIDReducer";
 import ToggleLoginReducer from "./ToggleLoginReducer";
+import UserReducer from "./UserReducer";
 
 const songDataReducers = combineReducers({
   songName: SongNameReducer,
@@ -11,6 +12,7 @@ const songDataReducers = combineReducers({
   videoID: YoutubeVideoIDReducer,
   SpotifyID: SpotifyIDReducer,
   toggleLogin: ToggleLoginReducer,
+  user: UserReducer,
 });
 
 export default songDataReducers;

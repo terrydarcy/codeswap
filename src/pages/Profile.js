@@ -53,7 +53,7 @@ function Profile() {
 
   return (
     <div className="profile">
-      <Card className=" profile_card" style={{ borderRadius: 30, color: "black" }}>
+      <Card className=" profile_card" style={{ borderRadius: 30, color: "#e6e6e6", backgroundColor: "#161b22" }}>
         <div className="profile_pic_container">
           <img className="profile_pic" src={photoURL_} alt="profile" />
         </div>
@@ -63,17 +63,17 @@ function Profile() {
             <br />
 
             <ListItem>
-              Username: &nbsp; <div style={{ color: "#0079BF" }}> {displayName_}</div>
+              Username: &nbsp; <div style={{ color: "#42C062" }}> {displayName_}</div>
             </ListItem>
             <ListItem>
-              Email: &nbsp;<div style={{ color: "#0079BF" }}>{email_}</div>
+              Email: &nbsp;<div style={{ color: "#42C062" }}>{email_}</div>
             </ListItem>
             <br />
-            <Button variant="contained" style={{ fontFamily: "customHelvetica", backgroundColor: "#0079BF", color: "white", marginRight: 20 }} onClick={() => profile_logout()}>
+            <Button variant="outlined" color="secondary" style={{ fontFamily: "Consolas", marginRight: 20 }} onClick={() => profile_logout()}>
               Log out
             </Button>
 
-            <Button variant="contained" color="secondary" style={{ fontFamily: "customHelvetica" }} onClick={() => profile_deleteAccount()}>
+            <Button variant="outlined" color="secondary" style={{ fontFamily: "Consolas" }} onClick={() => profile_deleteAccount()}>
               Delete Account
             </Button>
           </List>

@@ -16,3 +16,10 @@
   background-color: #0d1117;
   color: #e6e6e6;
 }
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Consolas";
+}

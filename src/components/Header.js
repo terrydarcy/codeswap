@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "./styles/Header.css";
 import { makeStyles, Button, IconButton } from "@material-ui/core";
 import { AppBar } from "@material-ui/core";
@@ -7,25 +7,46 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Fade from "@material-ui/core/Fade";
 import firebase from "../config/fire";
+import { UserContext } from "../providers/UserProvider";
+import HeaderProfileWidget from "./HeaderProfileWidget";
+import { useHistory } from "react-router";
 
 function Header() {
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState();
+  const [popoverAvatar, setPopoverAvatar] = React.useState(false);
+  let history = useHistory();
 
-  const [value, setValue] = useState("");
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
+  const user = useContext(UserContext);
+  const [email_, setEmail] = useState("");
+  const [displayName_, setDisplayName] = useState("");
+  const [photoURL_, setPhotoURL] = useState("");
 
-  const handleClose = () => {
-    setAnchorEl(null);
-    if (document.body.contains(document.getElementById("header_profile_button"))) {
-      document.getElementById("header_profile_button").style.color = "#e6e6e6";
+  useEffect(() => {
+    if (user) {
+      const { email, displayName, photoURL } = user;
+      setEmail(email);
+      setDisplayName(displayName);
+      setPhotoURL(photoURL);
+      console.log(user);
     }
+  }, [user]);
+
+  const closePopoverAvatar = () => setPopoverAvatar(false);
+
+  const openPopoverAvatar = (e) => {
+    e.preventDefault();
+
+    setPopoverAvatar(true);
+    setAnchorEl(e.currentTarget);
   };
 
-  const handleClick = (event) => {
-    document.getElementById("header_profile_button").style.color = "#d9215a";
-    setAnchorEl(event.currentTarget);
+  const handleLogout = () => {
+    setPopoverAvatar(false);
+    firebase.auth().signOut();
+    history.push("/");
   };
+
   return (
     <div>
       <AppBar position="static">
@@ -39,38 +60,36 @@ function Header() {
           </div>
           <div className="header_search_container">
             <div className="search_bar">
+              <div style={{ flex: 1 }} className="searchIconContainer">
+                <i className="fas fa-search  fa-lg" style={{ color: "#e6e6e6" }}></i>
+              </div>
               <input placeholder="Start typing to search for code"></input>
+              {/* <Button variant="outlined" className={classes.headerButton} style={{ backgroundColor: "#161b22", color: "e6e6e6", padding: 3, margin: 10, height: 25 }}>
+                Search
+              </Button> */}
             </div>
           </div>
           <div className="header_nav_container">
-            <Button variant="outlined" className={classes.headerButton}>
-              Add Job
+            <Button variant="outlined" className={classes.headerButton} style={{ backgroundColor: "#161b22", color: "e6e6e6", padding: 3, margin: 10, height: 40 }} onClick={() => history.push("/Addjob")}>
+              Post Task
             </Button>
-            <Button variant="outlined" className={classes.headerButton}>
+            <Button variant="outlined" className={classes.headerButton} style={{ backgroundColor: "#161b22", color: "e6e6e6", padding: 3, margin: 10, height: 40 }}>
               Balance: $500
             </Button>
-            <IconButton id="header_profile_button" className="header_profile-button far fa-user fa-5x" size="medium" aria-controls="fade-menu-liked" aria-haspopup="true" onClick={handleClick} />
+            {user ? (
+              <IconButton aria-controls="fade-menu-liked" aria-haspopup="true" onClick={openPopoverAvatar}>
+                <HeaderProfileWidget user={user} />{" "}
+              </IconButton>
+            ) : (
+              <IconButton id="header_profile_button" className=" far fa-user fa-5x" size="medium" onClick={() => history.push("/login")} aria-owns="simple-menu" aria-controls="simple-menu" aria-haspopup="true" />
+            )}
           </div>
         </div>
       </AppBar>
 
-      <Menu id="fade-menu-profile" anchorEl={anchorEl} keepMounted open={open} onClose={handleClose} getContentAnchorEl={null} anchorOrigin={{ vertical: "bottom", horizontal: "center" }} transformOrigin={{ vertical: "top", horizontal: "center" }} TransitionComponent={Fade}>
-        <Link to="/Profile" className="header-links">
-          <MenuItem className="header-links" onClick={handleClose}>
-            Profile
-          </MenuItem>
-        </Link>
-
-        <Link to="/" className="header-links">
-          <MenuItem
-            className="header-links"
-            onClick={() => {
-              firebase.auth().signOut();
-            }}
-          >
-            Logout
-          </MenuItem>
-        </Link>
+      <Menu id="simple-menu" anchorEl={anchorEl} onClose={closePopoverAvatar} open={popoverAvatar}>
+        <MenuItem onClick={() => history.push("/profile")}>Profile</MenuItem>
+        <MenuItem onClick={() => handleLogout()}>Logout</MenuItem>
       </Menu>
     </div>
   );
@@ -80,7 +99,6 @@ const useStyles = makeStyles((theme) => ({
   headerButton: {
     fontFamily: "Consolas",
     color: "#e6e6e6",
-    marginRight: 5,
     minWidth: 50,
   },
 }));

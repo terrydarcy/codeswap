@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { Component, createContext, useEffect, useState } from "react";
 import { auth, generateUserDocument } from "../config/fire";
 
 export const UserContext = createContext({ user: null });
