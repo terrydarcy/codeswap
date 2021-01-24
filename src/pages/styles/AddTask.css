@@ -3,6 +3,14 @@
   align-items: center;
   justify-content: center;
   margin: 20px;
+  margin-right: 5%;
+  margin-left: 5%;
+}
+#error_text {
+  color: #d9215a;
+}
+#success_text {
+  color: #42c062;
 }
 .add_job_container {
   display: flex;

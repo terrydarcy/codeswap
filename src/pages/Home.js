@@ -1,12 +1,15 @@
 import React, { useContext, useState, useEffect } from "react";
 import "./styles/Home.css";
 import { UserContext } from "../providers/UserProvider";
+import TaskCard from "../components/TaskCard";
+import firebase from "firebase";
 
 function Home() {
   const user = useContext(UserContext);
   const [email_, setEmail] = useState("");
   const [displayName_, setDisplayName] = useState("");
   const [photoURL_, setPhotoURL] = useState("");
+  const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
     if (user) {
@@ -18,13 +21,22 @@ function Home() {
     }
   }, [user]);
 
+  useEffect(() => {
+    firebase
+      .firestore()
+      .collection("tasks")
+      .orderBy("timestampPosted", "desc")
+      .onSnapshot((snapshot) => {
+        setTasks(snapshot.docs.map((doc) => ({ id: doc.id, task: doc.data() })));
+      });
+  }, []);
+
   return (
     <div className="Home">
-      <div className="jobCard">
-        <h2>Scheme Algorithm</h2>
-      </div>
-      <div className="jobCard">
-        <h2>Prolog Algorithm</h2>
+      <div className="task_container">
+        {tasks.map(({ task, id }) => (
+          <TaskCard key={id} task={task} />
+        ))}
       </div>
     </div>
   );

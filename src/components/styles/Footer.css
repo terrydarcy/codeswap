@@ -1,12 +1,15 @@
 .footer {
   text-align: center;
   margin: 20px;
+  margin-left: 10%;
+  margin-right: 10%;
   font-size: 11pt;
   color: #3c3f46;
 }
 
 .footerFlex {
   flex: 1;
+  max-height: 150px;
   width: 100%;
   flex-shrink: 0;
   background-color: #0d1117;

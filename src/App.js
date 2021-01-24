@@ -20,16 +20,18 @@ function App() {
     <UserProvider>
       <Provider store={store}>
         <Router>
+          <Header />
           <div className="app">
-            <Header />
             <div className="app_body">
-              <Switch>
-                <Route path="/login" component={Login} />
-                <Route path="/createaccount" component={CreateAccount} />
-                <Route path="/profile" component={Profile} />
-                <Route path="/addJob" component={AddTask} />
-                <Route path="/" exact component={Home} />
-              </Switch>
+              <div className="header_margin_correction">
+                <Switch>
+                  <Route path="/login" component={Login} />
+                  <Route path="/createaccount" component={CreateAccount} />
+                  <Route path="/profile" component={Profile} />
+                  <Route path="/addJob" component={AddTask} />
+                  <Route path="/" exact component={Home} />
+                </Switch>
+              </div>
             </div>
             <Footer />
           </div>
