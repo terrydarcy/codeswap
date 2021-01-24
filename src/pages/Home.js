@@ -33,6 +33,7 @@ function Home() {
 
   return (
     <div className="Home">
+      <h1 style={{ marginBottom: 0 }}>Task Feed</h1>
       <div className="task_container">
         {tasks.map(({ task, id }) => (
           <TaskCard key={id} task={task} />

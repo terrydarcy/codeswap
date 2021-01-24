@@ -70,11 +70,11 @@ function Header() {
             </div>
           </div>
           <div className="header_nav_container">
-            <Button variant="outlined" className={classes.headerButton} style={{ backgroundColor: "#161b22", color: "e6e6e6", padding: 3, margin: 10, height: 40 }} onClick={() => history.push("/Addjob")}>
+            <Button variant="outlined" className={classes.headerButton} style={{ borderRadius: 10, backgroundColor: "#0d1117", color: "e6e6e6", padding: 3, margin: 10, height: 40 }} onClick={() => history.push("/Addjob")}>
               Post Task
             </Button>
-            <Button variant="outlined" className={classes.headerButton} style={{ backgroundColor: "#161b22", color: "e6e6e6", padding: 3, margin: 10, height: 40 }}>
-              Balance: $500
+            <Button variant="outlined" className={classes.headerButton} style={{ borderRadius: 10, backgroundColor: "#0d1117", color: "e6e6e6", padding: 3, margin: 10, height: 40 }}>
+              Balance: $0
             </Button>
             {user ? (
               <IconButton aria-controls="fade-menu-liked" aria-haspopup="true" onClick={openPopoverAvatar}>
@@ -99,7 +99,8 @@ const useStyles = makeStyles((theme) => ({
   headerButton: {
     fontFamily: "Consolas",
     color: "#e6e6e6",
-    minWidth: 50,
+    minWidth: 90,
+    fontSize: 12,
   },
 }));
 
