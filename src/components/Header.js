@@ -81,16 +81,22 @@ function Header() {
                 <HeaderProfileWidget user={user} />{" "}
               </IconButton>
             ) : (
-              <IconButton id="header_profile_button" className=" far fa-user fa-5x" size="medium" onClick={() => history.push("/login")} aria-owns="simple-menu" aria-controls="simple-menu" aria-haspopup="true" />
+              <IconButton id="header_profile_button" className=" far fa-user fa-5x" size="medium" onClick={openPopoverAvatar} aria-owns="simple-menu" aria-controls="simple-menu" aria-haspopup="true" />
             )}
           </div>
         </div>
       </AppBar>
-
-      <Menu id="simple-menu" anchorEl={anchorEl} onClose={closePopoverAvatar} open={popoverAvatar}>
-        <MenuItem onClick={() => history.push("/profile")}>Profile</MenuItem>
-        <MenuItem onClick={() => handleLogout()}>Logout</MenuItem>
-      </Menu>
+      {user ? (
+        <Menu id="simple-menu" anchorEl={anchorEl} onClose={closePopoverAvatar} open={popoverAvatar}>
+          <MenuItem onClick={() => history.push("/profile")}>Profile</MenuItem>
+          <MenuItem onClick={() => handleLogout()}>Logout</MenuItem>
+        </Menu>
+      ) : (
+        <Menu id="simple-menu" anchorEl={anchorEl} onClose={closePopoverAvatar} open={popoverAvatar}>
+          <MenuItem onClick={() => history.push("/login")}>Login</MenuItem>
+          <MenuItem onClick={() => history.push("/Createaccount")}>Create Account</MenuItem>
+        </Menu>
+      )}
     </div>
   );
 }

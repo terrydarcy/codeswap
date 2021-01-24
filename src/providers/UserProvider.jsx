@@ -7,8 +7,14 @@ function UserProvider(props) {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
+    const data = localStorage.getItem("User");
+    if (data) {
+      console.log("test", JSON.parse(data));
+      setUser(JSON.parse(data));
+    }
     auth.onAuthStateChanged(async (userAuth) => {
       const user = await generateUserDocument(userAuth);
+      localStorage.setItem("User", JSON.stringify(user));
       setUser(user);
     });
   }, []);

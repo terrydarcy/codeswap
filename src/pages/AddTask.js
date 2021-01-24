@@ -21,7 +21,11 @@ function AddTask() {
   const [taskDescription, setTaskDescription] = useState("");
   const [taskTags, setTaskTags] = useState("");
 
+  var Filter = require("bad-words"),
+    filter = new Filter();
+
   useEffect(() => {
+    //filter.addWords('some', 'bad', 'word');
     if (user) {
       const { email, displayName, photoURL } = user;
       setEmail(email);
@@ -33,29 +37,33 @@ function AddTask() {
 
   const postTask = () => {
     if (user) {
-      if (taskTitle.length < 5) {
-        document.getElementById("error_text").innerHTML = "Task title field must be longer than 5 characters.";
-      } else if (taskSubject.length < 1) {
-        document.getElementById("error_text").innerHTML = "Task programming language/subject field must be longer than 1 characters.";
-      } else if (taskDescription.length < 10) {
-        document.getElementById("error_text").innerHTML = "Task description field must be longer than 10 characters.";
-      } else if (taskTags.length < 1) {
-        document.getElementById("error_text").innerHTML = "Task tags field must be longer than 1 characters.";
+      if (filter.isProfane(taskTitle) || filter.isProfane(taskSubject) || filter.isProfane(taskDescription || filter.isProfane(taskTags))) {
+        document.getElementById("error_text").innerHTML = "Explicit language is not allowed.";
       } else {
-        firebase.firestore().collection("tasks").add({
-          taskTitle: taskTitle,
-          taskSubject: taskSubject,
-          taskDescription: taskDescription,
-          taskTags: taskTags,
-          timestampPosted: firebase.firestore.FieldValue.serverTimestamp(),
-          postedBy: user.uid,
-        });
-        setTaskTitle("");
-        setTaskSubject("");
-        setTaskDescription("");
-        setTaskTags("");
-        document.getElementById("error_text").innerHTML = "";
-        document.getElementById("success_text").innerHTML = "Task has been posted! <a href ='/' style ='color:#e6e6e6'> click here </a> to view your task.";
+        if (taskTitle.length < 5) {
+          document.getElementById("error_text").innerHTML = "Task title field must be longer than 5 characters.";
+        } else if (taskSubject.length < 1) {
+          document.getElementById("error_text").innerHTML = "Task programming language/subject field must be longer than 1 characters.";
+        } else if (taskDescription.length < 10) {
+          document.getElementById("error_text").innerHTML = "Task description field must be longer than 10 characters.";
+        } else if (taskTags.length < 1) {
+          document.getElementById("error_text").innerHTML = "Task tags field must be longer than 1 characters.";
+        } else {
+          firebase.firestore().collection("tasks").add({
+            taskTitle: taskTitle,
+            taskSubject: taskSubject,
+            taskDescription: taskDescription,
+            taskTags: taskTags,
+            timestampPosted: firebase.firestore.FieldValue.serverTimestamp(),
+            postedBy: user.uid,
+          });
+          setTaskTitle("");
+          setTaskSubject("");
+          setTaskDescription("");
+          setTaskTags("");
+          document.getElementById("error_text").innerHTML = "";
+          document.getElementById("success_text").innerHTML = "Task has been posted! <a href ='/' style ='color:#e6e6e6'> click here </a> to view your task.";
+        }
       }
     } else {
       document.getElementById("error_text").innerHTML = "Please login to post a task.";
