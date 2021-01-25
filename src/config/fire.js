@@ -18,6 +18,8 @@ export const auth = firebase.auth();
 
 export const firestore = firebase.firestore();
 
+export const analytics = firebase.analytics();
+
 const checkLogin = () => {
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {

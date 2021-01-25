@@ -39,3 +39,32 @@
   flex: 1;
   padding: 5px;
 }
+.rounded_profile_task {
+  border-radius: 50%;
+  height: 40px;
+  border: solid #1c222b 5px;
+}
+.rounded_profile_task_container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  height: 60px;
+  margin-bottom: 5px;
+}
+.rounded_profile_task_container > h1,
+h2,
+h3,
+h4 {
+  text-align: left;
+}
+.task_info_container {
+  display: flex;
+  width: 100%;
+  background-color: #1c222b;
+  align-self: flex-start;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-radius: 10px;
+}

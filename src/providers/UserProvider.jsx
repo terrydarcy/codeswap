@@ -9,12 +9,14 @@ function UserProvider(props) {
   useEffect(() => {
     const data = localStorage.getItem("User");
     if (data) {
-      console.log("test", JSON.parse(data));
-      setUser(JSON.parse(data));
+      if (data != undefined) {
+        console.log("test", JSON.parse(data));
+        setUser(JSON.parse(data));
+      }
     }
     auth.onAuthStateChanged(async (userAuth) => {
       const user = await generateUserDocument(userAuth);
-      localStorage.setItem("User", JSON.stringify(user));
+      if (user != undefined) localStorage.setItem("User", JSON.stringify(user));
       setUser(user);
     });
   }, []);
