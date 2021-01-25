@@ -1,0 +1,53 @@
+.balance {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.balance_card {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  padding-bottom: 30px;
+  min-width: 400px;
+  min-height: 400px;
+  margin: 30px;
+  color: #e6e6e6;
+  background-color: #161b22;
+}
+.balance_info_container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  flex: 1;
+  padding-top: 20px;
+}
+
+.balance_num_container {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #1c222b;
+  border-radius: 10px;
+  width: 80%;
+}
+
+.balance_num_container > h1,
+h2,
+h3,
+h4 {
+  margin: 0px;
+}
+
+.balance_buttons_container {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: flex-end;
+  flex: 1;
+}

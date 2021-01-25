@@ -55,12 +55,12 @@ function Login() {
         <br></br>
 
         <div style={{ display: "flex", textAlign: "center", justifyContent: "center", alignItems: "center" }}>
-          <Button className="login_buttons" onClick={(e) => logInWithEmailAndPassword(e, email, password)} variant="contained" size="large" style={{ backgroundColor: "#42C062", color: "#e6e6e6", padding: 5 }}>
+          <Button className="login_buttons" onClick={(e) => logInWithEmailAndPassword(e, email, password)} variant="contained" size="small" style={{ fontFamily: "Consolas", backgroundColor: "#42C062", color: "#e6e6e6", padding: 5, height: 30 }}>
             Log In
           </Button>
         </div>
         <h4>or</h4>
-        <Button variant="contained" size="small" style={{ textAlign: "center", padding: 5, backgroundColor: "#0079BF", color: "#e6e6e6" }} onClick={() => history.push("/Createaccount")}>
+        <Button variant="contained" size="small" style={{ fontFamily: "Consolas", textAlign: "center", padding: 5, backgroundColor: "#0079BF", color: "#e6e6e6", height: 30 }} onClick={() => history.push("/Createaccount")}>
           Create New Account
         </Button>
       </div>

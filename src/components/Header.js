@@ -73,7 +73,7 @@ function Header() {
             <Button variant="outlined" className={classes.headerButton} style={{ borderRadius: 10, backgroundColor: "#0d1117", color: "e6e6e6", padding: 3, margin: 10, height: 40 }} onClick={() => history.push("/Addjob")}>
               Post Task
             </Button>
-            <Button variant="outlined" className={classes.headerButton} style={{ borderRadius: 10, backgroundColor: "#0d1117", color: "e6e6e6", padding: 3, margin: 10, height: 40 }}>
+            <Button variant="outlined" className={classes.headerButton} style={{ borderRadius: 10, backgroundColor: "#0d1117", color: "e6e6e6", padding: 3, margin: 10, height: 40 }} onClick={() => history.push("/Balance")}>
               Balance: $0
             </Button>
             {user ? (
