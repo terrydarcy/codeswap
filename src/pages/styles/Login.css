@@ -4,6 +4,7 @@
   justify-content: center;
   text-align: center;
   flex-direction: column;
+  padding-top: 30px;
 }
 .error {
   color: #d9215a;

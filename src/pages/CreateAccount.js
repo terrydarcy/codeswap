@@ -11,23 +11,30 @@ function CreateAccount() {
   const [error, setError] = useState("");
   let history = useHistory();
 
+  var Filter = require("bad-words"),
+    filter = new Filter();
+
   const signUpWithEmailAndPassword = async (event, displayName, email_, password_) => {
     event.preventDefault();
-    try {
-      const { user } = await firebase.auth().createUserWithEmailAndPassword(email_, password_);
-      console.log("test 0", displayName);
-      await generateUserDocument(user, displayName);
-      document.getElementById("displayName").value = "";
-      document.getElementById("email").value = "";
-      document.getElementById("password").value = "";
-      setEmail("");
-      setPassword("");
-      setDisplayName("");
-      history.push("/");
-    } catch (err) {
-      document.getElementById("error").innerHTML = err.message;
-      setError(error);
-      console.log(error);
+    if (filter.isProfane(displayName) || filter.isProfane(email_)) {
+      document.getElementById("error").innerHTML = "Explicit language is not allowed.";
+    } else {
+      try {
+        const { user } = await firebase.auth().createUserWithEmailAndPassword(email_, password_);
+        console.log("test 0", displayName);
+        await generateUserDocument(user, displayName);
+        document.getElementById("displayName").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("password").value = "";
+        setEmail("");
+        setPassword("");
+        setDisplayName("");
+        history.push("/");
+      } catch (err) {
+        document.getElementById("error").innerHTML = err.message;
+        setError(error);
+        console.log(error);
+      }
     }
   };
 
@@ -35,6 +42,7 @@ function CreateAccount() {
     <div className="login">
       <div className="login_container">
         <h3 style={{ textAlign: "center" }}>Create An Account</h3>
+        <br />
         <input className="input_login" placeholder="Username" id="displayName" type="text" onChange={(e) => setDisplayName(e.target.value)}></input>
         <br></br>
 
@@ -51,7 +59,11 @@ function CreateAccount() {
             Create Account
           </Button>
         </div>
+        <br />
+
         <h4>or</h4>
+        <br />
+
         <Button variant="contained" size="small" style={{ backgroundColor: "#0079BF", color: "#e6e6e6", textAlign: "center" }} onClick={() => history.push("/login")}>
           Log In
         </Button>

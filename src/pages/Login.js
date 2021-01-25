@@ -45,21 +45,21 @@ function Login() {
     <div className="login">
       <div className="login_container">
         <h2 style={{ textAlign: "center" }}>Login</h2>
-
+        <br />
         <input className="input_login" placeholder="Email" type="text" id="email" onChange={(e) => setEmail(e.target.value)}></input>
         <br></br>
         <input className="input_login" id="password" placeholder="Password" type="password" onChange={(e) => setPassword(e.target.value)}></input>
-
         <br></br>
         <div id="error" className="error"></div>
         <br></br>
-
         <div style={{ display: "flex", textAlign: "center", justifyContent: "center", alignItems: "center" }}>
           <Button className="login_buttons" onClick={(e) => logInWithEmailAndPassword(e, email, password)} variant="contained" size="small" style={{ fontFamily: "Consolas", backgroundColor: "#42C062", color: "#e6e6e6", padding: 5, height: 30 }}>
             Log In
           </Button>
-        </div>
+        </div>{" "}
+        <br />
         <h4>or</h4>
+        <br />
         <Button variant="contained" size="small" style={{ fontFamily: "Consolas", textAlign: "center", padding: 5, backgroundColor: "#0079BF", color: "#e6e6e6", height: 30 }} onClick={() => history.push("/Createaccount")}>
           Create New Account
         </Button>
