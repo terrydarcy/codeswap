@@ -10,7 +10,6 @@ function UserProvider(props) {
     const data = localStorage.getItem("User");
     if (data) {
       if (data != undefined) {
-        console.log("test", JSON.parse(data));
         setUser(JSON.parse(data));
       }
     }

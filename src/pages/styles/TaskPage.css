@@ -1,0 +1,19 @@
+.task {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.task_card_page {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  padding-bottom: 30px;
+  border-radius: 10px;
+  min-width: 400px;
+  min-height: 400px;
+  margin: 30px;
+  color: #e6e6e6;
+  background-color: #161b22;
+}

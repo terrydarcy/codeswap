@@ -25,7 +25,7 @@ function BalancePage() {
 
   return (
     <div className="balance">
-      <Card className=" balance_card" style={{ borderRadius: 30, color: "#e6e6e6", backgroundColor: "#161b22" }}>
+      <Card className=" balance_card" style={{ borderRadius: 10, color: "#e6e6e6", backgroundColor: "#161b22" }}>
         <div className="balance_info_container">
           <h2>Balance</h2>
         </div>

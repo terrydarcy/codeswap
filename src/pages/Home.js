@@ -72,7 +72,7 @@ function Home() {
       <br />
       <div className="task_container">
         {tasks.map(({ task, id }) => (
-          <TaskCard key={id} task={task} />
+          <TaskCard key={id} task={task} id={id} />
         ))}
       </div>
     </div>

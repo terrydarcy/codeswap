@@ -53,7 +53,7 @@ function Profile() {
 
   return (
     <div className="profile">
-      <Card className=" profile_card" style={{ borderRadius: 30, color: "#e6e6e6", backgroundColor: "#161b22" }}>
+      <Card className=" profile_card" style={{ borderRadius: 10, color: "#e6e6e6", backgroundColor: "#161b22" }}>
         <div className="profile_pic_container">
           <img className="profile_pic" src={photoURL_} alt="profile" />
         </div>
