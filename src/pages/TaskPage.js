@@ -9,6 +9,7 @@ import { capitalizeFirstLetter } from "../components/Capitalizer";
 import { makeStyles, Button, IconButton } from "@material-ui/core";
 import { UserContext } from "../providers/UserProvider";
 import Comment from "../components/Comment";
+import loadingImage from "../res/profile_post_loading.png";
 
 const TaskPage = forwardRef(({}, ref) => {
   const [email, setEmail] = useState("");
@@ -28,6 +29,7 @@ const TaskPage = forwardRef(({}, ref) => {
   const [timeDiff, setTimeDiff] = useState();
   const user = useContext(UserContext);
   const [commentList, setCommentList] = useState([]);
+  const [loaded, setLoaded] = useState(false);
 
   const [comment, setComment] = useState("");
   var Filter = require("bad-words"),
@@ -118,16 +120,24 @@ const TaskPage = forwardRef(({}, ref) => {
       document.getElementById("comment_button").click();
     }
   };
+
+  const profileLoadingStyle = !loaded ? { display: "none" } : {};
+
   return (
     <div ref={ref} className="task">
       <div className="task_container">
         <div className="task_card_page">
-          <div className="rounded_profile_task_container">
+          {!loaded && (
+            <div className="rounded_profile_task_container">
+              <img className="" src={loadingImage} />
+            </div>
+          )}
+          <div className="rounded_profile_task_container" style={profileLoadingStyle}>
             <IconButton aria-controls="fade-menu-liked" aria-haspopup="true">
-              <img className="rounded_profile_task" src={photoURL} />
+              <img className="rounded_profile_task" src={photoURL} onLoad={() => setLoaded(true)} />
             </IconButton>
-            <h3 style={{ margin: 0 }}>{capitalizeFirstLetter(displayName)} &#xb7; </h3>
-            <p style={{ margin: 0, marginLeft: 5 }}>{timeDiff}</p>
+            <h3 style={{ margin: 0, color: "#348feb" }}>{capitalizeFirstLetter(displayName)} &#xb7; </h3>
+            <p style={{ margin: 0, marginLeft: 5, color: "#348feb" }}>{timeDiff}</p>
           </div>
           <div className="task_info_container">
             <div className="task_title">
@@ -137,16 +147,10 @@ const TaskPage = forwardRef(({}, ref) => {
               <h3 style={{ margin: 5 }}> {capitalizeFirstLetter(taskSubject)}</h3>
             </div>
             <div className="task_description">
-              <p style={{ margin: 5 }}>
-                <u>Description</u> <br />
-                {capitalizeFirstLetter(taskDescription)}
-              </p>
+              <p style={{ margin: 5 }}>{capitalizeFirstLetter(taskDescription)}</p>
             </div>
             <div className="task_tags">
-              <p style={{ margin: 5 }}>
-                <u>Tags</u> <br />
-                {capitalizeFirstLetter(taskTags)}
-              </p>
+              <p style={{ margin: 5, fontSize: 13 }}>{capitalizeFirstLetter(taskTags)}</p>
             </div>
             <p style={{ fontFamily: "Consolas", paddingLeft: 10, color: "#348feb" }}> Leave an answer or comment</p>
 
@@ -159,7 +163,9 @@ const TaskPage = forwardRef(({}, ref) => {
               <Button type="submit" variant="outlined" className={classes.commentButton} style={{ borderRadius: 10, backgroundColor: "#0d1117", color: "e6e6e6", height: 35, marginLeft: 10, marginBottom: 10, marginRight: 10 }} id="comment_button" onClick={addComment}>
                 Comment
               </Button>
-              <p style={{ margin: 0, paddingTop: 10, color: "#348feb", fontSize: 13 }}>CTRL + ENTER to post</p>
+              <p style={{ margin: 0, paddingTop: 10, color: "#348feb", fontSize: 13 }} className="ctrlEnterPopup">
+                CTRL + ENTER to post
+              </p>
             </div>
           </div>
           <br />

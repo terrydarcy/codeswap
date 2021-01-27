@@ -7,11 +7,13 @@ import { Link } from "react-router-dom";
 import { getTimeDiff } from "./TimeMaths";
 import { capitalizeFirstLetter } from "./Capitalizer";
 import { useHistory } from "react-router";
+import loadingImage from "../res/profile_post_loading.png";
 
 const TaskCard = forwardRef(({ task, id }, ref) => {
   const [photoURL, setPhotoURL] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [timeDiff, setTimeDiff] = useState("");
+  const [loaded, setLoaded] = useState(false);
   let history = useHistory();
 
   useEffect(() => {
@@ -31,15 +33,22 @@ const TaskCard = forwardRef(({ task, id }, ref) => {
       });
   }, []);
 
+  const profileLoadingStyle = !loaded ? { display: "none" } : {};
+
   return (
     <div ref={ref} className="task_card">
       <div onClick={() => history.push("/task/" + id)} style={{ width: "100%" }}>
-        <div className="rounded_profile_task_container">
+        {!loaded && (
+          <div className="rounded_profile_task_container">
+            <img className="" src={loadingImage} />
+          </div>
+        )}
+        <div className="rounded_profile_task_container" style={profileLoadingStyle} id="waitForLoadDiv">
           <IconButton aria-controls="fade-menu-liked" aria-haspopup="true">
-            <img className="rounded_profile_task" src={photoURL} />
+            <img className="rounded_profile_task" src={photoURL} onLoad={() => setLoaded(true)} />
           </IconButton>
-          <h3 style={{ margin: 0 }}>{capitalizeFirstLetter(displayName)} &#xb7; </h3>
-          <p style={{ margin: 0, marginLeft: 5 }}>{timeDiff}</p>
+          <h3 style={{ margin: 0, color: "#348feb" }}>{capitalizeFirstLetter(displayName)} &#xb7; </h3>
+          <p style={{ margin: 0, marginLeft: 5, color: "#348feb" }}>{timeDiff}</p>
         </div>
         <div className="task_info_container">
           <div className="task_title">

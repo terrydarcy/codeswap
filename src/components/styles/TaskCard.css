@@ -36,12 +36,14 @@
 
 .task_tags {
   flex: 1;
+
   padding: 5px;
 }
 .rounded_profile_task {
   border-radius: 50%;
   height: 40px;
-  border: solid #e6e6e6 3px;
+  width: 40px;
+  border: solid #348feb 3px;
 }
 .rounded_profile_task_container {
   display: flex;
@@ -49,7 +51,8 @@
   align-items: center;
   justify-content: flex-start;
   flex-direction: row;
-  height: 60px;
+  height: 50px;
+
   margin-bottom: 5px;
 }
 .rounded_profile_task_container > h1,
