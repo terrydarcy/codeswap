@@ -1,20 +1,14 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import "./styles/AddTask.css";
 import { makeStyles, Button, IconButton } from "@material-ui/core";
 import { UserContext } from "../providers/UserProvider";
 import { useHistory } from "react-router";
 import firebase from "firebase";
+import { capitalizeFirstLetter } from "../components/Capitalizer";
 
 function AddTask() {
   const classes = useStyles();
   const user = useContext(UserContext);
-  let history = useHistory();
-
-  const [email_, setEmail] = useState("");
-  const [displayName_, setDisplayName] = useState("");
-  const [photoURL_, setPhotoURL] = useState("");
-  const [historyList, setHistoryList] = useState([]);
-  const [uid, setUID] = useState();
 
   const [taskTitle, setTaskTitle] = useState("");
   const [taskSubject, setTaskSubject] = useState("");
@@ -24,17 +18,31 @@ function AddTask() {
   var Filter = require("bad-words"),
     filter = new Filter();
 
-  useEffect(() => {
-    //filter.addWords('some', 'bad', 'word');
-    if (user) {
-      const { email, displayName, photoURL } = user;
-      setEmail(email);
-      setDisplayName(displayName);
-      setPhotoURL(photoURL);
-      setUID(user.uid);
+  const parseTags = (tags) => {
+    var split = "";
+    if (tags.includes(",")) {
+      split = tags.split(",");
+      for (var i = 0; i < split.length; i++) {
+        if (split[i].length <= 0) {
+          split.splice(i, 1);
+          split[i] = capitalizeFirstLetter(split[i]);
+          continue;
+        }
+        split[i] = "#" + split[i];
+      }
+    } else {
+      split = tags.split(" ");
+      for (var i = 0; i < split.length; i++) {
+        if (split[i].length <= 0) {
+          split.splice(i, 1);
+          continue;
+        }
+        split[i] = capitalizeFirstLetter(split[i]);
+        split[i] = "#" + split[i];
+      }
     }
-  }, [user]);
-
+    return split.join(" ");
+  };
   const postTask = () => {
     if (user) {
       if (filter.isProfane(taskTitle) || filter.isProfane(taskSubject) || filter.isProfane(taskDescription || filter.isProfane(taskTags))) {
@@ -49,18 +57,26 @@ function AddTask() {
         } else if (taskTags.length < 1) {
           document.getElementById("error_text").innerHTML = "Task tags field must be longer than 1 characters.";
         } else {
-          firebase.firestore().collection("tasks").add({
-            taskTitle: taskTitle,
-            taskSubject: taskSubject,
-            taskDescription: taskDescription,
-            taskTags: taskTags,
-            timestampPosted: firebase.firestore.FieldValue.serverTimestamp(),
-            postedBy: user.uid,
-          });
+          firebase
+            .firestore()
+            .collection("tasks")
+            .add({
+              taskTitle: taskTitle,
+              taskSubject: taskSubject,
+              taskDescription: taskDescription,
+              taskTags: parseTags(taskTags),
+              timestampPosted: firebase.firestore.FieldValue.serverTimestamp(),
+              postedBy: user.uid,
+            });
           setTaskTitle("");
           setTaskSubject("");
           setTaskDescription("");
           setTaskTags("");
+          document.getElementById("taskTitle").value = "";
+          document.getElementById("taskSubject").value = "";
+          document.getElementById("taskDescription").value = "";
+          document.getElementById("taskTags").value = "";
+
           document.getElementById("error_text").innerHTML = "";
           document.getElementById("success_text").innerHTML = "Task has been posted! <a href ='/' style ='color:#e6e6e6'> click here </a> to view your task.";
         }
@@ -102,14 +118,14 @@ function AddTask() {
         <div className="add_job_card_container">
           <div className="add_job_card">
             <h2>Task Details</h2>
-            <input className="input_login" placeholder="Task title" onChange={(e) => setTaskTitle(e.target.value)}></input>
-            <input className="input_login" placeholder="Programming language / subject" onChange={(e) => setTaskSubject(e.target.value)}></input>
-            <textarea className="input_login job_description" width="100%" type="text" rows="10" cols="80" placeholder="Task description" onChange={(e) => setTaskDescription(e.target.value)}></textarea>
+            <input className="input_login" placeholder="Task title" id="taskTitle" onChange={(e) => setTaskTitle(e.target.value)}></input>
+            <input className="input_login" placeholder="Programming language / subject" id="taskSubject" onChange={(e) => setTaskSubject(e.target.value)}></input>
+            <textarea className="input_login job_description" width="100%" type="text" rows="10" cols="80" id="taskDescription" placeholder="Task description" onChange={(e) => setTaskDescription(e.target.value)}></textarea>
             <div style={{ width: "100%", display: "flex" }}>
               <div style={{ flex: 1 }}>
                 <p>#</p>
               </div>
-              <input className="input_login" style={{ flex: 10 }} placeholder="Tags seperated with spaces" onChange={(e) => setTaskTags(e.target.value)}></input>
+              <input className="input_login" id="taskTags" style={{ flex: 10 }} placeholder="Tags seperated with spaces" onChange={(e) => setTaskTags(e.target.value)}></input>
             </div>
 
             <div id="error_text"></div>

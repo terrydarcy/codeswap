@@ -31,7 +31,7 @@ function App() {
                   <Route path="/createaccount" component={CreateAccount} />
                   <Route path="/profile" component={Profile} />
                   <Route path="/balance" component={BalancePage} />
-                  <Route path="/task:id" component={TaskPage} />
+                  <Route path="/task/:id" component={TaskPage} />
                   <Route path="/addJob" component={AddTask} />
                   <Route path="/" exact component={Home} />
                 </Switch>

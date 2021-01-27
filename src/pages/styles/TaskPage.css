@@ -2,18 +2,70 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  padding-top: 30px;
 }
 
-.task_card_page {
+.task_container {
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 70%;
+  height: 100%;
+  padding-top: 30px;
+}
+.task_card_page {
+  min-width: 300px;
+  width: 100%;
+  min-height: 350px;
+  background-color: #161b22;
+  padding: 10px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+  -webkit-box-shadow: 0px 0px 9px 3px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 0px 9px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 9px 3px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: flex-start;
   justify-content: flex-start;
   flex-direction: column;
-  padding-bottom: 30px;
+  max-width: 600px;
+}
+.comment_button_container {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: row;
+}
+.task_buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+.error {
+  color: #d9215a;
+}
+.input_task {
+  font-size: 13px;
+  border-width: 0px;
+  width: 95%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+  font-family: "Consolas";
   border-radius: 10px;
-  min-width: 400px;
-  min-height: 400px;
-  margin: 30px;
-  color: #e6e6e6;
+  margin-bottom: 10px;
   background-color: #161b22;
+  color: #e6e6e6;
+  height: 100px;
+  text-align: start;
+  resize: none;
+}
+.job_description {
 }

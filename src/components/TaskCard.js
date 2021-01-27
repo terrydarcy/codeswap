@@ -33,7 +33,7 @@ const TaskCard = forwardRef(({ task, id }, ref) => {
 
   return (
     <div ref={ref} className="task_card">
-      <Link to={"/task/" + id} style={{ textDecoration: "none", color: "#e6e6e6", width: "100%" }}>
+      <div onClick={() => history.push("/task/" + id)} style={{ width: "100%" }}>
         <div className="rounded_profile_task_container">
           <IconButton aria-controls="fade-menu-liked" aria-haspopup="true">
             <img className="rounded_profile_task" src={photoURL} />
@@ -55,7 +55,7 @@ const TaskCard = forwardRef(({ task, id }, ref) => {
             <p style={{ margin: 5 }}> {capitalizeFirstLetter(task.taskTags)}</p>
           </div>
         </div>
-      </Link>
+      </div>
     </div>
   );
 });

@@ -28,7 +28,6 @@ function Header() {
       setEmail(email);
       setDisplayName(displayName);
       setPhotoURL(photoURL);
-      console.log(user);
     }
   }, [user]);
 
