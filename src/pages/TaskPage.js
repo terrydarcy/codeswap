@@ -108,6 +108,8 @@ const TaskPage = forwardRef(({}, ref) => {
         setComment("");
         document.getElementById("comment").value = "";
       }
+    } else {
+      document.getElementById("error").innerHTML = "Please <a style=' color: #e6e6e6;' href='/login'>login here</a> to post comments";
     }
   };
 
@@ -160,6 +162,12 @@ const TaskPage = forwardRef(({}, ref) => {
               <p style={{ margin: 0, paddingTop: 10, color: "#348feb", fontSize: 13 }}>CTRL + ENTER to post</p>
             </div>
           </div>
+          <br />
+          <br />
+          <h3>
+            Comments <small>(sorted by time posted)</small>
+          </h3>
+
           <div className="comment_container">
             {commentList.map(({ comment, id }) => (
               <Comment key={id} comment={comment} />

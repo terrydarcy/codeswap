@@ -7,9 +7,11 @@
   margin-left: 5%;
 }
 #error_text {
+  margin: 10;
   color: #d9215a;
 }
 #success_text {
+  margin: 10;
   color: #42c062;
 }
 .add_job_container {

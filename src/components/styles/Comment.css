@@ -11,6 +11,7 @@
   background-color: #1c222b;
   margin-top: 20px;
   border-radius: 10px;
+  overflow-wrap: break-word;
 }
 .rounded_profile_comment {
   border-radius: 50%;

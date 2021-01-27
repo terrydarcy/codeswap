@@ -7,19 +7,8 @@
   padding-top: 30px;
 }
 
-.task_container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  width: 70%;
-  height: 100%;
-  padding-top: 30px;
-}
 .task_card_page {
-  min-width: 300px;
   width: 100%;
-  min-height: 350px;
   background-color: #161b22;
   padding: 10px;
   margin-bottom: 30px;
@@ -49,13 +38,15 @@
   flex-direction: row;
 }
 .error {
+  margin: 10;
   color: #d9215a;
 }
 .input_task {
   font-size: 13px;
   border-width: 0px;
-  width: 95%;
   padding-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
   padding-bottom: 10px;
   padding-left: 15px;
   font-family: "Consolas";

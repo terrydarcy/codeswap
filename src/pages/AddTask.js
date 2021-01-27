@@ -82,7 +82,7 @@ function AddTask() {
         }
       }
     } else {
-      document.getElementById("error_text").innerHTML = "Please login to post a task.";
+      document.getElementById("error_text").innerHTML = "Please <a style=' color: #e6e6e6;' href='/login'>login here</a> to post comments";
     }
   };
 

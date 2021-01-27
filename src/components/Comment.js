@@ -37,7 +37,7 @@ const Comment = forwardRef(({ comment, id }, ref) => {
           <h4 style={{ margin: 0 }}>{capitalizeFirstLetter(displayName)} &#xb7; </h4>
           <p style={{ margin: 0, marginLeft: 5, fontSize: 15 }}>{timeDiff}</p>
         </div>
-        <p style={{ paddingLeft: 10 }}>{comment.comment}</p>
+        <p style={{ paddingLeft: 10, paddingRight: 10 }}>{comment.comment}</p>
       </div>
     </div>
   );

@@ -43,11 +43,11 @@ function Home() {
         <div></div>
       ) : (
         <div className="logged_out_landing">
-          <h1 style={{ margin: 0 }} className="header_logo">
+          <h1 style={{ margin: 10, padding: 10 }} className="header_logo">
             Welcome to code<span className="header_text_color_mod">swap</span>
           </h1>
 
-          <h4>
+          <h4 style={{ margin: 15 }}>
             Connecting new developer questions with experienced developers answers
             <br />
             <br />A platform to empower and financially support developers with the honor tipping system
