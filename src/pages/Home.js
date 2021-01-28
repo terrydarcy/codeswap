@@ -6,15 +6,15 @@ import TaskCard from "../components/TaskCard";
 import firebase from "firebase";
 import { useHistory } from "react-router";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { Loading } from "react-loading-dot";
 import pacmanLoading from "../res/pacman.svg";
+
 function Home() {
   const user = useContext(UserContext);
   const [tasks, setTasks] = useState([]);
-  const [lastEntry, setLastEntry] = useState([]);
-  const [hasMore, setHasMore] = useState(true);
   let history = useHistory();
 
+  const [lastEntry, setLastEntry] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -31,12 +31,7 @@ function Home() {
       .orderBy("timestampPosted", "desc")
       .limit(5)
       .onSnapshot((snapshot) => {
-        // var lastVisible = snapshot.docs[snapshot.docs.length - 1];
-        // snapshot.forEach((doc) => {
-        //   this.state.PostsAtt.push({ data: doc.data(), id: doc.id });
-        // });
         setTasks(snapshot.docs.map((doc) => ({ id: doc.id, task: doc.data() })));
-
         setLastEntry(snapshot.docs[snapshot.docs.length - 1]);
       });
   }, []);

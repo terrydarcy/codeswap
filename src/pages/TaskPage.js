@@ -1,8 +1,6 @@
 import "./styles/TaskPage.css";
 import React, { useState, useContext, useEffect, forwardRef } from "react";
 import firebase from "firebase";
-import { useHistory } from "react-router";
-import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
 import { getTimeDiff } from "../components/TimeMaths";
 import { capitalizeFirstLetter } from "../components/Capitalizer";
@@ -10,12 +8,10 @@ import { makeStyles, Button, IconButton } from "@material-ui/core";
 import { UserContext } from "../providers/UserProvider";
 import Comment from "../components/Comment";
 import loadingImage from "../res/profile_post_loading.png";
+import InfiniteScroll from "react-infinite-scroll-component";
+import pacmanLoading from "../res/pacman.svg";
 
 const TaskPage = forwardRef(({}, ref) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  let history = useHistory();
-  const dispatch = useDispatch();
   let st = useParams();
   const classes = useStyles();
 
@@ -29,6 +25,9 @@ const TaskPage = forwardRef(({}, ref) => {
   const [timeDiff, setTimeDiff] = useState();
   const user = useContext(UserContext);
   const [commentList, setCommentList] = useState([]);
+
+  const [lastEntry, setLastEntry] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
   const [loaded, setLoaded] = useState(false);
 
   const [comment, setComment] = useState("");
@@ -59,7 +58,7 @@ const TaskPage = forwardRef(({}, ref) => {
               }
             })
             .catch(function (error) {
-              console.log("Error getting doc2312312312ument:", error);
+              console.log("Error getting document:", error);
             });
         } else {
         }
@@ -86,9 +85,11 @@ const TaskPage = forwardRef(({}, ref) => {
       .firestore()
       .collection("comments")
       .orderBy("timestampPosted", "desc")
+      .limit(10)
       .where("taskID", "==", st.id)
       .onSnapshot((snapshot) => {
         setCommentList(snapshot.docs.map((doc) => ({ id: doc.id, comment: doc.data() })));
+        setLastEntry(snapshot.docs[snapshot.docs.length - 1]);
       });
   }, []);
 
@@ -122,7 +123,26 @@ const TaskPage = forwardRef(({}, ref) => {
   };
 
   const profileLoadingStyle = !loaded ? { display: "none" } : {};
+  const fetchMoreData = async () => {
+    await setTimeout(() => {
+      firebase
+        .firestore()
+        .collection("comments")
+        .orderBy("timestampPosted", "desc")
+        .startAfter(lastEntry)
+        .limit(10)
+        .where("taskID", "==", st.id)
+        .onSnapshot((snapshot) => {
+          setCommentList(commentList.concat(snapshot.docs.map((doc) => ({ id: doc.id, comment: doc.data() }))));
 
+          setLastEntry(snapshot.docs[snapshot.docs.length - 1]);
+
+          if (snapshot.docs.length <= 0) {
+            setHasMore(false);
+          }
+        });
+    }, 650);
+  };
   return (
     <div ref={ref} className="task">
       <div className="task_container">
@@ -171,13 +191,15 @@ const TaskPage = forwardRef(({}, ref) => {
           <br />
           <br />
           <h3>
-            Comments <small>(sorted by time posted)</small>
+            Comment Stack <small>(sorted by time posted)</small>
           </h3>
 
           <div className="comment_container">
-            {commentList.map(({ comment, id }) => (
-              <Comment key={id} comment={comment} />
-            ))}
+            <InfiniteScroll dataLength={commentList.length} next={fetchMoreData} width="100%" hasMore={hasMore} endMessage={<p style={{ textAlign: "center" }}>You've reached the end of the comment stack!</p>} loader={<img src={pacmanLoading} alt="loading" width="100" />}>
+              {commentList.map(({ comment, id }) => (
+                <Comment key={id} comment={comment} />
+              ))}
+            </InfiniteScroll>
           </div>
         </div>
       </div>
