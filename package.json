@@ -18,6 +18,7 @@
     "react-flip-move": "^3.0.4",
     "react-image": "^4.0.3",
     "react-infinite-scroll-component": "^5.1.0",
+    "react-loading-dot": "^1.0.6",
     "react-player": "^2.7.2",
     "react-redux": "^7.2.2",
     "react-rounded-image": "^2.0.11",

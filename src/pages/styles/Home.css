@@ -43,3 +43,14 @@ h4 {
   justify-content: center;
   flex-direction: row;
 }
+.infinite-scroll-component__outerdiv,
+.infinite-scroll-component {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.loading {
+  position: relative;
+}

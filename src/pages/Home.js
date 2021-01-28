@@ -6,13 +6,13 @@ import TaskCard from "../components/TaskCard";
 import firebase from "firebase";
 import { useHistory } from "react-router";
 import InfiniteScroll from "react-infinite-scroll-component";
-
+import { Loading } from "react-loading-dot";
+import pacmanLoading from "../res/pacman.svg";
 function Home() {
   const user = useContext(UserContext);
-  const [email_, setEmail] = useState("");
-  const [displayName_, setDisplayName] = useState("");
-  const [photoURL_, setPhotoURL] = useState("");
   const [tasks, setTasks] = useState([]);
+  const [lastEntry, setLastEntry] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
   let history = useHistory();
 
   const [loaded, setLoaded] = useState(false);
@@ -20,10 +20,6 @@ function Home() {
   useEffect(() => {
     if (user) {
       const { email, displayName, photoURL } = user;
-      setEmail(email);
-      setDisplayName(displayName);
-      setPhotoURL(photoURL);
-      console.log(user);
     }
     return setLoaded(true);
   }, [user]);
@@ -33,16 +29,35 @@ function Home() {
       .firestore()
       .collection("tasks")
       .orderBy("timestampPosted", "desc")
+      .limit(5)
       .onSnapshot((snapshot) => {
+        // var lastVisible = snapshot.docs[snapshot.docs.length - 1];
+        // snapshot.forEach((doc) => {
+        //   this.state.PostsAtt.push({ data: doc.data(), id: doc.id });
+        // });
         setTasks(snapshot.docs.map((doc) => ({ id: doc.id, task: doc.data() })));
+
+        setLastEntry(snapshot.docs[snapshot.docs.length - 1]);
       });
   }, []);
 
-  const fetchMoreData = () => {
-    // a fake async api call like which sends
-    // 20 more records in 1.5 secs
-    // setTimeout(() => {
-    // }, 1500);
+  const fetchMoreData = async () => {
+    await setTimeout(() => {
+      firebase
+        .firestore()
+        .collection("tasks")
+        .orderBy("timestampPosted", "desc")
+        .startAfter(lastEntry)
+        .limit(5)
+        .onSnapshot((snapshot) => {
+          setTasks(tasks.concat(snapshot.docs.map((doc) => ({ id: doc.id, task: doc.data() }))));
+          setLastEntry(snapshot.docs[snapshot.docs.length - 1]);
+
+          if (snapshot.docs.length <= 0) {
+            setHasMore(false);
+          }
+        });
+    }, 650);
   };
   return (
     <div className="Home">
@@ -74,11 +89,21 @@ function Home() {
           </div>
         </div>
       )}
-
       <h1 style={{ marginBottom: 0 }}>The Stack</h1>
       <br />
       <div className="task_container">
-        <InfiniteScroll dataLength={tasks.length} next={() => fetchMoreData} hasMore={true} loader={<h4>Loading...</h4>}>
+        <InfiniteScroll
+          dataLength={tasks.length}
+          next={fetchMoreData}
+          width="100%"
+          hasMore={hasMore}
+          endMessage={
+            <p style={{ textAlign: "center" }}>
+              <b>You've reached the end of the stack!</b>
+            </p>
+          }
+          loader={<img src={pacmanLoading} alt="loading" width="100" />}
+        >
           {tasks.map(({ task, id }) => (
             <TaskCard key={id} task={task} id={id} />
           ))}
