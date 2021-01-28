@@ -175,7 +175,9 @@ const TaskPage = forwardRef(({}, ref) => {
             <p style={{ fontFamily: "Consolas", paddingLeft: 10, color: "#348feb" }}> Leave an answer or comment</p>
 
             <div className="task_buttons">
-              <textarea onKeyPress={(e) => onKeyPress(e)} className="input_task" type="text" rows="10" cols="80" id="comment" placeholder="Start typing to comment" onChange={(e) => setComment(e.target.value)}></textarea>
+              <div style={{ paddingLeft: 10, paddingRight: 10, width: "100%" }}>
+                <textarea onKeyPress={(e) => onKeyPress(e)} className="input_task" type="text" rows="10" cols="100" id="comment" placeholder="Start typing to comment" onChange={(e) => setComment(e.target.value)}></textarea>
+              </div>
             </div>
             <div id="error" className="error"></div>
 

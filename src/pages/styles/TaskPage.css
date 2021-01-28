@@ -9,6 +9,7 @@
 
 .task_card_page {
   width: 100%;
+  max-width: 800px;
   background-color: #161b22;
   padding: 10px;
   margin-bottom: 30px;
@@ -22,7 +23,6 @@
   align-items: flex-start;
   justify-content: flex-start;
   flex-direction: column;
-  max-width: 600px;
 }
 .comment_button_container {
   width: 100%;
@@ -44,22 +44,19 @@
 .input_task {
   font-size: 13px;
   border-width: 0px;
-  padding-top: 10px;
-  margin-left: 10px;
-  margin-right: 10px;
-  padding-bottom: 10px;
-  padding-left: 15px;
-  font-family: "Consolas";
-  border-radius: 10px;
+  padding: 10px;
   margin-bottom: 10px;
   background-color: #161b22;
   color: #e6e6e6;
   height: 100px;
-  text-align: start;
   resize: none;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
 }
-.job_description {
-}
+
 @media only screen and (max-width: 400px) {
   .ctrlEnterPopup {
     display: none;
