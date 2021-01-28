@@ -65,6 +65,7 @@ h4 {
   display: flex;
   flex: 1;
   width: 100%;
+  cursor: pointer;
   background-color: #1c222b;
   align-self: flex-start;
   flex-direction: column;

@@ -34,3 +34,15 @@ export const setUserLogin = (data) => {
     payload: data,
   };
 };
+export const setUpVoted = (data) => {
+  return {
+    type: "upVote",
+    payload: data,
+  };
+};
+export const setDownVoted = (data) => {
+  return {
+    type: "downVote",
+    payload: data,
+  };
+};

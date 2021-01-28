@@ -12,11 +12,11 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import UserProvider from "./providers/UserProvider";
 import Footer from "./components/Footer";
 import { createStore } from "redux";
-import songDataReducers from "./redux/reducers";
+import Reducers from "./redux/reducers";
 import { Provider } from "react-redux";
 
 function App() {
-  const store = createStore(songDataReducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+  const store = createStore(Reducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
   return (
     <UserProvider>

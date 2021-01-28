@@ -1,18 +1,10 @@
-import SongNameReducer from "./SongNameReducer";
-import ArtistNameReducer from "./ArtistNameReducer";
-import YoutubeVideoIDReducer from "./YoutubeVideoIDReducer";
 import { combineReducers } from "redux";
-import SpotifyIDReducer from "./SpotifyIDReducer";
-import ToggleLoginReducer from "./ToggleLoginReducer";
-import UserReducer from "./UserReducer";
+import upVotedReducer from "./upVotedReducer";
+import downVotedReducer from "./downVotedReducer";
 
-const songDataReducers = combineReducers({
-  songName: SongNameReducer,
-  artistName: ArtistNameReducer,
-  videoID: YoutubeVideoIDReducer,
-  SpotifyID: SpotifyIDReducer,
-  toggleLogin: ToggleLoginReducer,
-  user: UserReducer,
+const Reducers = combineReducers({
+  upVoted: upVotedReducer,
+  downVoted: downVotedReducer,
 });
 
-export default songDataReducers;
+export default Reducers;

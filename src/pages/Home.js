@@ -100,7 +100,7 @@ function Home() {
         loader={<img src={pacmanLoading} alt="loading" width="100" />}
       >
         {tasks.map(({ task, id }) => (
-          <TaskCard key={id} task={task} id={id} />
+          <TaskCard key={id} task={task} id={id} user={user} />
         ))}
       </InfiniteScroll>
     </div>

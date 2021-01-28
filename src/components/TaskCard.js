@@ -1,15 +1,14 @@
 import React, { forwardRef, useEffect, useState } from "react";
 import { IconButton } from "@material-ui/core";
 import "./styles/TaskCard.css";
-import HeaderProfileWidget from "./HeaderProfileWidget";
 import firebase from "firebase";
-import { Link } from "react-router-dom";
 import { getTimeDiff } from "./TimeMaths";
 import { capitalizeFirstLetter } from "./Capitalizer";
 import { useHistory } from "react-router";
 import loadingImage from "../res/profile_post_loading.png";
+import Voting from "./Voting";
 
-const TaskCard = forwardRef(({ task, id }, ref) => {
+const TaskCard = forwardRef(({ task, id, user }, ref) => {
   const [photoURL, setPhotoURL] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [timeDiff, setTimeDiff] = useState("");
@@ -37,20 +36,27 @@ const TaskCard = forwardRef(({ task, id }, ref) => {
 
   return (
     <div ref={ref} className="task_card">
-      <div onClick={() => history.push("/task/" + id)} style={{ width: "100%" }}>
+      <div style={{ width: "100%" }}>
         {!loaded && (
           <div className="rounded_profile_task_container">
             <img className="" src={loadingImage} />
+            <div style={{ marginRight: "auto", display: "flex", flexDirection: "row", flexGrow: 1, alignItems: "flex-end", justifyContent: "flex-end" }}>
+              <Voting id={id} userID={user.uid} />
+            </div>
           </div>
         )}
+
         <div className="rounded_profile_task_container" style={profileLoadingStyle} id="waitForLoadDiv">
           <IconButton aria-controls="fade-menu-liked" aria-haspopup="true">
-            <img className="rounded_profile_task" src={photoURL} onLoad={() => setLoaded(true)} />
+            <img className="rounded_profile_task" src={photoURL} onLoad={() => setLoaded(true)} alt="profile" />
           </IconButton>
-          <h3 style={{ margin: 0, color: "#348feb" }}>{capitalizeFirstLetter(displayName)} &#xb7; </h3>
-          <p style={{ margin: 0, marginLeft: 5, color: "#348feb" }}>{timeDiff}</p>
+          <h4 style={{ margin: 0, color: "#348feb" }}>{capitalizeFirstLetter(displayName)} &#xb7; </h4>
+          <p style={{ margin: 0, marginLeft: 5, fontSize: 13, color: "#348feb" }}>{timeDiff} </p>
+          <div style={{ marginRight: "auto", display: "flex", flexDirection: "row", flexGrow: 1, alignItems: "flex-end", justifyContent: "flex-end" }}>
+            <Voting id={id} userID={user.uid} />
+          </div>
         </div>
-        <div className="task_info_container">
+        <div onClick={() => history.push("/task/" + id)} className="task_info_container">
           <div className="task_title">
             <h2 style={{ margin: 5 }}> {capitalizeFirstLetter(task.taskTitle)}</h2>
           </div>
