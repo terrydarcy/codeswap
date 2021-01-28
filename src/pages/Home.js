@@ -5,6 +5,7 @@ import { UserContext } from "../providers/UserProvider";
 import TaskCard from "../components/TaskCard";
 import firebase from "firebase";
 import { useHistory } from "react-router";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 function Home() {
   const user = useContext(UserContext);
@@ -37,6 +38,12 @@ function Home() {
       });
   }, []);
 
+  const fetchMoreData = () => {
+    // a fake async api call like which sends
+    // 20 more records in 1.5 secs
+    // setTimeout(() => {
+    // }, 1500);
+  };
   return (
     <div className="Home">
       {user && loaded ? (
@@ -68,12 +75,14 @@ function Home() {
         </div>
       )}
 
-      <h1 style={{ marginBottom: 0 }}>Task Stack</h1>
+      <h1 style={{ marginBottom: 0 }}>The Stack</h1>
       <br />
       <div className="task_container">
-        {tasks.map(({ task, id }) => (
-          <TaskCard key={id} task={task} id={id} />
-        ))}
+        <InfiniteScroll dataLength={tasks.length} next={() => fetchMoreData} hasMore={true} loader={<h4>Loading...</h4>}>
+          {tasks.map(({ task, id }) => (
+            <TaskCard key={id} task={task} id={id} />
+          ))}
+        </InfiniteScroll>
       </div>
     </div>
   );
