@@ -6,11 +6,11 @@
 }
 
 .task_container {
+  width: 90%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 90%;
 }
 
 .logged_out_landing {
@@ -43,13 +43,20 @@ h4 {
   justify-content: center;
   flex-direction: row;
 }
-.infinite-scroll-component__outerdiv,
-.infinite-scroll-component {
+.infinite-scroll-component__outerdiv {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+.infinite-scroll-component {
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  overflow: show;
 }
 .loading {
   position: relative;

@@ -86,24 +86,23 @@ function Home() {
       )}
       <h1 style={{ marginBottom: 0 }}>The Stack</h1>
       <br />
-      <div className="task_container">
-        <InfiniteScroll
-          dataLength={tasks.length}
-          next={fetchMoreData}
-          width="100%"
-          hasMore={hasMore}
-          endMessage={
-            <p style={{ textAlign: "center" }}>
-              <b>You've reached the end of the stack!</b>
-            </p>
-          }
-          loader={<img src={pacmanLoading} alt="loading" width="100" />}
-        >
-          {tasks.map(({ task, id }) => (
-            <TaskCard key={id} task={task} id={id} />
-          ))}
-        </InfiniteScroll>
-      </div>
+      <InfiniteScroll
+        style={{ overflow: "show" }}
+        dataLength={tasks.length}
+        next={fetchMoreData}
+        width="100%"
+        hasMore={hasMore}
+        endMessage={
+          <p style={{ textAlign: "center" }}>
+            <b>You've reached the end of the stack!</b>
+          </p>
+        }
+        loader={<img src={pacmanLoading} alt="loading" width="100" />}
+      >
+        {tasks.map(({ task, id }) => (
+          <TaskCard key={id} task={task} id={id} />
+        ))}
+      </InfiniteScroll>
     </div>
   );
 }

@@ -192,12 +192,12 @@ const TaskPage = forwardRef(({}, ref) => {
           </div>
           <br />
           <br />
-          <h3>
-            Comment Stack <small>(sorted by time posted)</small>
-          </h3>
 
           <div className="comment_container">
             <InfiniteScroll dataLength={commentList.length} next={fetchMoreData} width="100%" hasMore={hasMore} endMessage={<p style={{ textAlign: "center" }}>You've reached the end of the comment stack!</p>} loader={<img src={pacmanLoading} alt="loading" width="100" />}>
+              <h3>
+                Comment Stack <small>(sorted by time posted)</small>
+              </h3>
               {commentList.map(({ comment, id }) => (
                 <Comment key={id} comment={comment} />
               ))}
