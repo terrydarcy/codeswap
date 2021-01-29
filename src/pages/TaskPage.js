@@ -10,6 +10,7 @@ import Comment from "../components/Comment";
 import loadingImage from "../res/profile_post_loading.png";
 import InfiniteScroll from "react-infinite-scroll-component";
 import pacmanLoading from "../res/pacman.svg";
+import Voting from "../components/Voting";
 
 const TaskPage = forwardRef(({}, ref) => {
   let st = useParams();
@@ -152,12 +153,18 @@ const TaskPage = forwardRef(({}, ref) => {
               <img className="" src={loadingImage} />
             </div>
           )}
+
           <div className="rounded_profile_task_container" style={profileLoadingStyle}>
             <IconButton aria-controls="fade-menu-liked" aria-haspopup="true">
               <img className="rounded_profile_task" src={photoURL} onLoad={() => setLoaded(true)} />
             </IconButton>
             <h3 style={{ margin: 0, color: "#348feb" }}>{capitalizeFirstLetter(displayName)} &#xb7; </h3>
             <p style={{ margin: 0, marginLeft: 5, color: "#348feb" }}>{timeDiff}</p>
+            {user && (
+              <div style={{ marginRight: "auto", display: "flex", flexDirection: "row", flexGrow: 1, alignItems: "flex-end", justifyContent: "flex-end" }}>
+                <Voting id={st.id} userID={user.uid} />
+              </div>
+            )}
           </div>
           <div className="task_info_container">
             <div className="task_title">

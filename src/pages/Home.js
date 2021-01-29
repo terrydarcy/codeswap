@@ -13,8 +13,10 @@ function Home() {
   const [tasks, setTasks] = useState([]);
   let history = useHistory();
 
-  const [lastEntry, setLastEntry] = useState([]);
-  const [hasMore, setHasMore] = useState(true);
+  const firstLoad = firebase.firestore().collection("tasks").orderBy("timestampPosted", "desc").limit(4);
+
+  const [lastEntry, setLastEntry] = useState([null]);
+  const [hasMore, setHasMore] = useState(firstLoad);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -29,7 +31,7 @@ function Home() {
       .firestore()
       .collection("tasks")
       .orderBy("timestampPosted", "desc")
-      .limit(5)
+      .limit(4)
       .onSnapshot((snapshot) => {
         setTasks(snapshot.docs.map((doc) => ({ id: doc.id, task: doc.data() })));
         setLastEntry(snapshot.docs[snapshot.docs.length - 1]);
@@ -37,13 +39,13 @@ function Home() {
   }, []);
 
   const fetchMoreData = async () => {
-    await setTimeout(() => {
+    if (hasMore) {
       firebase
         .firestore()
         .collection("tasks")
         .orderBy("timestampPosted", "desc")
         .startAfter(lastEntry)
-        .limit(5)
+        .limit(3)
         .onSnapshot((snapshot) => {
           setTasks(tasks.concat(snapshot.docs.map((doc) => ({ id: doc.id, task: doc.data() }))));
           setLastEntry(snapshot.docs[snapshot.docs.length - 1]);
@@ -52,10 +54,10 @@ function Home() {
             setHasMore(false);
           }
         });
-    }, 650);
+    }
   };
   return (
-    <div className="Home">
+    <div className="Home" id="home">
       {user && loaded ? (
         <div></div>
       ) : (
@@ -87,7 +89,6 @@ function Home() {
       <h1 style={{ marginBottom: 0 }}>The Stack</h1>
       <br />
       <InfiniteScroll
-        style={{ overflow: "show" }}
         dataLength={tasks.length}
         next={fetchMoreData}
         width="100%"

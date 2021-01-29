@@ -16,20 +16,24 @@ const Voting = forwardRef(({ id, userID }, ref) => {
     let unmounted = false;
 
     isUpVoted(id, userID).then(function (result) {
-      if (!unmounted) {
-        if (result) {
+      if (result) {
+        if (!unmounted) {
           setUpVotedCheck(true);
-        } else {
+        }
+      } else {
+        if (!unmounted) {
           setUpVotedCheck(false);
         }
       }
     });
 
     isDownVoted(id, userID).then(function (result) {
-      if (!unmounted) {
-        if (result) {
+      if (result) {
+        if (!unmounted) {
           setDownVotedCheck(true);
-        } else {
+        }
+      } else {
+        if (!unmounted) {
           setDownVotedCheck(false);
         }
       }
