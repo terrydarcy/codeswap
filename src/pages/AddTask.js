@@ -1,8 +1,7 @@
 import React, { useContext, useState } from "react";
 import "./styles/AddTask.css";
-import { makeStyles, Button, IconButton } from "@material-ui/core";
+import { makeStyles, Button } from "@material-ui/core";
 import { UserContext } from "../providers/UserProvider";
-import { useHistory } from "react-router";
 import firebase from "firebase";
 import { capitalizeFirstLetter } from "../components/Capitalizer";
 
@@ -32,13 +31,13 @@ function AddTask() {
       }
     } else {
       split = tags.split(" ");
-      for (var i = 0; i < split.length; i++) {
-        if (split[i].length <= 0) {
-          split.splice(i, 1);
+      for (var j = 0; j < split.length; j++) {
+        if (split[j].length <= 0) {
+          split.splice(j, 1);
           continue;
         }
-        split[i] = capitalizeFirstLetter(split[i]);
-        split[i] = "#" + split[i];
+        split[j] = capitalizeFirstLetter(split[j]);
+        split[j] = "#" + split[j];
       }
     }
     return split.join(" ");

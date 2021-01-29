@@ -3,20 +3,11 @@ import React, { useState } from "react";
 import firebase from "../config/fire";
 import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { toggleLogin } from "../redux/actions";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   let history = useHistory();
-  const Logintoggled = useSelector((state) => state.toggleLogin);
-  const dispatch = useDispatch();
-
-  const toggleLoginButton = () => {
-    dispatch(toggleLogin(!Logintoggled));
-  };
 
   const logInWithEmailAndPassword = (event, email_, password_) => {
     event.preventDefault();
@@ -35,8 +26,6 @@ function Login() {
         setEmail("");
         setPassword("");
         history.push("/");
-      } else {
-        // No user is signed in.
       }
     });
   };

@@ -18,7 +18,6 @@ function Home() {
   useEffect(() => {
     var unmounted = false;
     if (!unmounted) {
-      console.log("test");
       firebase
         .firestore()
         .collection("tasks")
@@ -26,7 +25,6 @@ function Home() {
         .limit(4)
         .get()
         .then((snapshot) => {
-          console.log(snapshot);
           setTasks(snapshot.docs.map((doc) => ({ id: doc.id, task: doc.data() })));
           setLastEntry(snapshot.docs[snapshot.docs.length - 1]);
           setHasMore(true);

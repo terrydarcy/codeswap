@@ -1,27 +1,15 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./styles/BalancePage.css";
 import { Button, Card } from "@material-ui/core";
-import { UserContext } from "../providers/UserProvider";
-import { useHistory } from "react-router";
-import firebase from "firebase";
 
 function BalancePage() {
-  const user = useContext(UserContext);
-  let history = useHistory();
+  // const user = useContext(UserContext);
 
-  const [email_, setEmail] = useState("");
-  const [displayName_, setDisplayName] = useState("");
-  const [photoURL_, setPhotoURL] = useState("");
   const [balance, setBalance] = useState(0.0);
 
   useEffect(() => {
-    if (user) {
-      const { email, displayName, photoURL } = user;
-      setEmail(email);
-      setDisplayName(displayName);
-      setPhotoURL(photoURL);
-    }
-  }, [user]);
+    setBalance(0);
+  }, []);
 
   return (
     <div className="balance">

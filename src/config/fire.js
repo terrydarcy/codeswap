@@ -20,23 +20,13 @@ export const firestore = firebase.firestore();
 
 export const analytics = firebase.analytics();
 
-const checkLogin = () => {
-  firebase.auth().onAuthStateChanged(function (user) {
-    if (user) {
-      return user;
-    } else {
-      return false;
-    }
-  });
-};
-
 export const generateUserDocument = async (user, dName) => {
   if (!user) return;
   const userRef = firebase.firestore().doc(`Users/${user.uid}`);
   const snapshot = userRef.get();
   const seed = Math.floor(Math.random() * Math.floor(5000));
   const photoURL = "https://picsum.photos/seed/" + seed + "/200";
-  if (dName != undefined) {
+  if (dName !== undefined) {
     if (!snapshot.exists) {
       try {
         await userRef.set({

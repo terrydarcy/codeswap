@@ -1,11 +1,11 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./styles/HeaderProfileWidget.css";
 
 const HeaderProfileWidget = ({ user }) => {
   const [photoURL_, setPhotoURL] = useState("");
 
   useEffect(() => {
-    const { email, displayName, photoURL } = user;
+    const { photoURL } = user;
     if (user) {
       setPhotoURL(photoURL);
     }
@@ -13,7 +13,7 @@ const HeaderProfileWidget = ({ user }) => {
 
   return (
     <div>
-      <img className="rounded_profile" src={photoURL_} />
+      <img className="rounded_profile" src={photoURL_} alt="profile" />
     </div>
   );
 };

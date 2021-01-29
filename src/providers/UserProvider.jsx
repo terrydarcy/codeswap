@@ -1,4 +1,4 @@
-import React, { Component, createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { auth, generateUserDocument } from "../config/fire";
 
 export const UserContext = createContext({ user: null });
@@ -9,13 +9,13 @@ function UserProvider(props) {
   useEffect(() => {
     const data = localStorage.getItem("User");
     if (data) {
-      if (data != undefined) {
+      if (data !== undefined) {
         setUser(JSON.parse(data));
       }
     }
     auth.onAuthStateChanged(async (userAuth) => {
       const user = await generateUserDocument(userAuth);
-      if (user != undefined) localStorage.setItem("User", JSON.stringify(user));
+      if (user !== undefined) localStorage.setItem("User", JSON.stringify(user));
       setUser(user);
     });
   }, []);

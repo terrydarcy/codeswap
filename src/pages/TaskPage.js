@@ -1,5 +1,5 @@
 import "./styles/TaskPage.css";
-import React, { useState, useContext, useEffect, forwardRef } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import firebase from "firebase";
 import { useParams } from "react-router";
 import { getTimeDiff } from "../components/TimeMaths";
@@ -12,7 +12,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import pacmanLoading from "../res/pacman.svg";
 import Voting from "../components/Voting";
 
-const TaskPage = forwardRef(({}, ref) => {
+function TaskPage() {
   let st = useParams();
   const classes = useStyles();
 
@@ -20,7 +20,6 @@ const TaskPage = forwardRef(({}, ref) => {
   const [taskSubject, setTaskSubject] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
   const [taskTags, setTaskTags] = useState("");
-  const [postedBy, setPostedBy] = useState("");
   const [photoURL, setPhotoURL] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [timeDiff, setTimeDiff] = useState();
@@ -36,8 +35,10 @@ const TaskPage = forwardRef(({}, ref) => {
     filter = new Filter();
 
   useEffect(() => {
-    var docRef = firebase.firestore().collection("tasks").doc(st.id);
-    docRef
+    firebase
+      .firestore()
+      .collection("tasks")
+      .doc(st.id)
       .get()
       .then(function (doc) {
         if (doc.exists) {
@@ -45,7 +46,6 @@ const TaskPage = forwardRef(({}, ref) => {
           setTaskSubject(doc.data().taskSubject);
           setTaskDescription(doc.data().taskDescription);
           setTaskTags(doc.data().taskTags);
-          setPostedBy(doc.data().postedBy);
 
           var docRef = firebase.firestore().collection("Users").doc(doc.data().postedBy);
           setTimeDiff(getTimeDiff(doc.data().timestampPosted));
@@ -68,18 +68,20 @@ const TaskPage = forwardRef(({}, ref) => {
         console.log("Error getting document:", error);
       });
 
-    var docRef = firebase.firestore().collection("comments").doc();
-    docRef.get().then(function (doc) {
-      if (doc.exists) {
-        setTaskTitle(doc.data().taskTitle);
-        setTaskSubject(doc.data().taskSubject);
-        setTaskDescription(doc.data().taskDescription);
-        setTaskTags(doc.data().taskTags);
-        setPostedBy(doc.data().postedBy);
-      } else {
-      }
-    });
-  }, []);
+    firebase
+      .firestore()
+      .collection("comments")
+      .doc()
+      .get()
+      .then(function (doc) {
+        if (doc.exists) {
+          setTaskTitle(doc.data().taskTitle);
+          setTaskSubject(doc.data().taskSubject);
+          setTaskDescription(doc.data().taskDescription);
+          setTaskTags(doc.data().taskTags);
+        }
+      });
+  }, [st.id]);
 
   useEffect(() => {
     firebase
@@ -92,7 +94,7 @@ const TaskPage = forwardRef(({}, ref) => {
         setCommentList(snapshot.docs.map((doc) => ({ id: doc.id, comment: doc.data() })));
         setLastEntry(snapshot.docs[snapshot.docs.length - 1]);
       });
-  }, []);
+  }, [st.id]);
 
   const addComment = () => {
     if (user) {
@@ -145,12 +147,12 @@ const TaskPage = forwardRef(({}, ref) => {
     }, 650);
   };
   return (
-    <div ref={ref} className="task">
+    <div className="task">
       <div className="task_container">
         <div className="task_card_page">
           {!loaded && (
             <div className="rounded_profile_task_container">
-              <img className="" src={loadingImage} />
+              <img src={loadingImage} alt="loading" />
               {user && <Voting id={st.id} userID={user.uid} />}
               {!user && <Voting id={st.id} userID={null} />}
             </div>
@@ -158,7 +160,7 @@ const TaskPage = forwardRef(({}, ref) => {
 
           <div className="rounded_profile_task_container" style={profileLoadingStyle}>
             <IconButton aria-controls="fade-menu-liked" aria-haspopup="true">
-              <img className="rounded_profile_task" src={photoURL} onLoad={() => setLoaded(true)} />
+              <img className="rounded_profile_task" src={photoURL} onLoad={() => setLoaded(true)} alt="profile" />
             </IconButton>
             <h3 style={{ margin: 0, color: "#348feb" }}>{capitalizeFirstLetter(displayName)} &#xb7; </h3>
             <p style={{ margin: 0, marginLeft: 5, color: "#348feb" }}>{timeDiff}</p>
@@ -213,7 +215,7 @@ const TaskPage = forwardRef(({}, ref) => {
       </div>
     </div>
   );
-});
+}
 
 const useStyles = makeStyles((theme) => ({
   commentButton: {

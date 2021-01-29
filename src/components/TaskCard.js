@@ -35,7 +35,7 @@ const TaskCard = forwardRef(({ task, id, user }, ref) => {
     }
 
     return () => (unmounted = true);
-  }, []);
+  }, [task.timestampPosted, task.postedBy]);
 
   const profileLoadingStyle = !loaded ? { display: "none" } : {};
 
@@ -44,7 +44,7 @@ const TaskCard = forwardRef(({ task, id, user }, ref) => {
       <div style={{ width: "100%" }}>
         {!loaded && (
           <div className="rounded_profile_task_container">
-            <img className="" src={loadingImage} />
+            <img src={loadingImage} alt="loading" />
             {user && <Voting id={id} userID={user.uid} />}
             {!user && <Voting id={id} userID={null} />}
           </div>

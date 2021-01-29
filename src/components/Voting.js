@@ -55,7 +55,7 @@ const Voting = forwardRef(({ id, userID }, ref) => {
     return () => {
       unmounted = true;
     };
-  }, []);
+  }, [id, userID]);
 
   const isUpVoted = async (taskID, userID) => {
     var upVoted = false;
@@ -66,7 +66,7 @@ const Voting = forwardRef(({ id, userID }, ref) => {
       .get()
       .then(function (doc) {
         if (doc.exists) {
-          if (doc.data().upVoted != undefined) if (doc.data().upVoted.includes(userID)) upVoted = true;
+          if (doc.data().upVoted !== undefined) if (doc.data().upVoted.includes(userID)) upVoted = true;
         }
       })
       .catch(function (error) {
@@ -125,7 +125,7 @@ const Voting = forwardRef(({ id, userID }, ref) => {
       .get()
       .then(function (doc) {
         if (doc.exists) {
-          if (doc.data().downVoted != undefined) if (doc.data().downVoted.includes(userID)) downVoted = true;
+          if (doc.data().downVoted !== undefined) if (doc.data().downVoted.includes(userID)) downVoted = true;
         }
       })
       .catch(function (error) {

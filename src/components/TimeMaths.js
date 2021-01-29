@@ -4,7 +4,6 @@ export const getTimeDiff = (time0) => {
     var secsTimeDiff = time1 - time0.seconds,
       minsTimeDiff,
       hoursTimeDiff,
-      daysTimeDiff,
       prevNum,
       ret,
       isHours = false;
@@ -12,7 +11,7 @@ export const getTimeDiff = (time0) => {
     if (secsTimeDiff < 30) {
       return "Just now";
     }
-    if (Math.floor(secsTimeDiff) == 1) {
+    if (Math.floor(secsTimeDiff) === 1) {
       ret = String(Math.floor(secsTimeDiff)) + " second ago";
     } else {
       ret = String(Math.floor(secsTimeDiff)) + " seconds ago";
@@ -20,7 +19,7 @@ export const getTimeDiff = (time0) => {
 
     if (secsTimeDiff > 60) {
       prevNum = Math.floor((minsTimeDiff = secsTimeDiff / 60));
-      if (prevNum == 1) {
+      if (prevNum === 1) {
         ret = String(Math.floor((minsTimeDiff = secsTimeDiff / 60))) + " min ago";
       } else {
         ret = String(Math.floor((minsTimeDiff = secsTimeDiff / 60))) + " mins ago";
@@ -29,7 +28,7 @@ export const getTimeDiff = (time0) => {
     if (prevNum > 60) {
       prevNum = Math.floor((hoursTimeDiff = minsTimeDiff / 60));
       isHours = true;
-      if (prevNum == 1) {
+      if (prevNum === 1) {
         ret = String(Math.floor((hoursTimeDiff = minsTimeDiff / 60))) + " hour ago";
       } else {
         ret = String(Math.floor((hoursTimeDiff = minsTimeDiff / 60))) + " hours ago";
@@ -39,11 +38,11 @@ export const getTimeDiff = (time0) => {
     }
 
     if (isHours && prevNum > 24) {
-      prevNum = Math.floor((daysTimeDiff = hoursTimeDiff / 24));
-      if (prevNum == 1) {
-        ret = String(Math.floor((daysTimeDiff = hoursTimeDiff / 24))) + " day ago";
+      prevNum = Math.floor(hoursTimeDiff / 24);
+      if (prevNum === 1) {
+        ret = String(Math.floor(hoursTimeDiff / 24)) + " day ago";
       } else {
-        ret = String(Math.floor((daysTimeDiff = hoursTimeDiff / 24))) + " days ago";
+        ret = String(Math.floor(hoursTimeDiff / 24)) + " days ago";
       }
     }
     return ret;

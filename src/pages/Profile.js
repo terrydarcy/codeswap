@@ -1,9 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import "./styles/Profile.css";
-import LocationOnIcon from "@material-ui/icons/LocationOn";
-import PermIdentityIcon from "@material-ui/icons/PermIdentity";
-import { Button, Card, List, ListItem, ListItemText } from "@material-ui/core";
-import ReactRoundedImage from "react-rounded-image";
+import { Button, Card, List, ListItem } from "@material-ui/core";
 import { UserContext } from "../providers/UserProvider";
 import { useHistory } from "react-router";
 import firebase from "firebase";
@@ -15,7 +12,6 @@ function Profile() {
   const [email_, setEmail] = useState("");
   const [displayName_, setDisplayName] = useState("");
   const [photoURL_, setPhotoURL] = useState("");
-  const [historyList, setHistoryList] = useState([]);
 
   useEffect(() => {
     if (user) {
@@ -39,17 +35,6 @@ function Profile() {
         history.push("/");
       });
   };
-
-  useEffect(() => {
-    firebase
-      .firestore()
-      .collection("History")
-      .orderBy("timestamp", "desc")
-      .onSnapshot((snapshot) => {
-        console.log(snapshot.docs);
-        setHistoryList(snapshot.docs.map((doc) => ({ text: doc.history_text })));
-      });
-  }, []);
 
   return (
     <div className="profile">

@@ -1,11 +1,9 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import "./styles/Header.css";
 import { makeStyles, Button, IconButton } from "@material-ui/core";
 import { AppBar } from "@material-ui/core";
-import { Link } from "react-router-dom";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import Fade from "@material-ui/core/Fade";
 import firebase from "../config/fire";
 import { UserContext } from "../providers/UserProvider";
 import HeaderProfileWidget from "./HeaderProfileWidget";
@@ -16,21 +14,7 @@ function Header() {
   const [anchorEl, setAnchorEl] = React.useState();
   const [popoverAvatar, setPopoverAvatar] = React.useState(false);
   let history = useHistory();
-
   const user = useContext(UserContext);
-  const [email_, setEmail] = useState("");
-  const [displayName_, setDisplayName] = useState("");
-  const [photoURL_, setPhotoURL] = useState("");
-
-  useEffect(() => {
-    if (user) {
-      const { email, displayName, photoURL } = user;
-      setEmail(email);
-      setDisplayName(displayName);
-      setPhotoURL(photoURL);
-    }
-  }, [user]);
-
   const closePopoverAvatar = () => setPopoverAvatar(false);
 
   const openPopoverAvatar = (e) => {
@@ -63,9 +47,6 @@ function Header() {
                 <i className="fas fa-search  fa-lg" style={{ color: "#e6e6e6" }}></i>
               </div>
               <input placeholder="Start typing to search for code"></input>
-              {/* <Button variant="outlined" className={classes.headerButton} style={{ backgroundColor: "#161b22", color: "e6e6e6", padding: 3, margin: 10, height: 25 }}>
-                Search
-              </Button> */}
             </div>
           </div>
           <div className="header_nav_container">
