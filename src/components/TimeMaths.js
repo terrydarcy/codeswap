@@ -34,16 +34,18 @@ export const getTimeDiff = (time0) => {
       } else {
         ret = String(Math.floor((hoursTimeDiff = minsTimeDiff / 60))) + " hours ago";
       }
-    } else if (isHours && prevNum > 24) {
-      prevNum = Math.floor((daysTimeDiff = hoursTimeDiff / 60));
+    } else {
+      return ret;
+    }
+
+    if (isHours && prevNum > 24) {
+      prevNum = Math.floor((daysTimeDiff = hoursTimeDiff / 24));
       if (prevNum == 1) {
-        ret = String(Math.floor((daysTimeDiff = hoursTimeDiff / 60))) + " day ago";
+        ret = String(Math.floor((daysTimeDiff = hoursTimeDiff / 24))) + " day ago";
       } else {
-        ret = String(Math.floor((daysTimeDiff = hoursTimeDiff / 60))) + " days ago";
+        ret = String(Math.floor((daysTimeDiff = hoursTimeDiff / 24))) + " days ago";
       }
     }
-  } else {
     return ret;
   }
-  return ret;
 };
