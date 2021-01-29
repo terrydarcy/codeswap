@@ -11,15 +11,12 @@ import pacmanLoading from "../res/pacman.svg";
 function Home() {
   const user = useContext(UserContext);
   const [tasks, setTasks] = useState([]);
-  let history = useHistory();
-
   const [lastEntry, setLastEntry] = useState(null);
   const [hasMore, setHasMore] = useState(true);
-  const [loaded, setLoaded] = useState(false);
+  let history = useHistory();
 
   useEffect(() => {
     var unmounted = false;
-
     if (!unmounted) {
       console.log("test");
       firebase
@@ -35,7 +32,6 @@ function Home() {
           setHasMore(true);
         });
     }
-
     return () => (unmounted = true);
   }, []);
 
@@ -49,28 +45,27 @@ function Home() {
       .onSnapshot((snapshot) => {
         setTasks(tasks.concat(snapshot.docs.map((doc) => ({ id: doc.id, task: doc.data() }))));
         setLastEntry(snapshot.docs[snapshot.docs.length - 1]);
-
         if (snapshot.docs.length <= 0) {
           setHasMore(false);
         }
       });
   };
+
   return (
     <div className="Home" id="home">
-      {user && loaded ? (
+      {user ? (
         <div></div>
       ) : (
         <div className="logged_out_landing">
           <h1 style={{ margin: 10, padding: 10 }} className="header_logo">
             Welcome to code<span className="header_text_color_mod">swap</span>
           </h1>
-
           <h4 style={{ margin: 15 }}>
             Connecting new developer questions with experienced developers answers
             <br />
-            <br />A platform to empower and financially support developers with the honor tipping system
             <br />
-            <br />
+            A platform to empower and financially support developers with the honor tipping system
+            <br /> <br />
             There is no honor among thieves!
           </h4>
 
