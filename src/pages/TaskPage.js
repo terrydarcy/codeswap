@@ -151,6 +151,7 @@ const TaskPage = forwardRef(({}, ref) => {
           {!loaded && (
             <div className="rounded_profile_task_container">
               <img className="" src={loadingImage} />
+              {user && <Voting id={st.id} userID={user.uid} />}
             </div>
           )}
 
@@ -160,11 +161,7 @@ const TaskPage = forwardRef(({}, ref) => {
             </IconButton>
             <h3 style={{ margin: 0, color: "#348feb" }}>{capitalizeFirstLetter(displayName)} &#xb7; </h3>
             <p style={{ margin: 0, marginLeft: 5, color: "#348feb" }}>{timeDiff}</p>
-            {user && (
-              <div style={{ marginRight: "auto", display: "flex", flexDirection: "row", flexGrow: 1, alignItems: "flex-end", justifyContent: "flex-end" }}>
-                <Voting id={st.id} userID={user.uid} />
-              </div>
-            )}
+            {user && <div style={{ marginRight: "auto", display: "flex", flexDirection: "row", flexGrow: 1, alignItems: "flex-end", justifyContent: "flex-end" }}>{user && <Voting id={st.id} userID={user.uid} />}</div>}
           </div>
           <div className="task_info_container">
             <div className="task_title">

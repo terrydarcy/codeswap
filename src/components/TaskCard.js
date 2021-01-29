@@ -40,9 +40,7 @@ const TaskCard = forwardRef(({ task, id, user }, ref) => {
         {!loaded && (
           <div className="rounded_profile_task_container">
             <img className="" src={loadingImage} />
-            <div style={{ marginRight: "auto", display: "flex", flexDirection: "row", flexGrow: 1, alignItems: "flex-end", justifyContent: "flex-end" }}>
-              <Voting id={id} userID={user.uid} />
-            </div>
+            <div style={{ marginRight: "auto", display: "flex", flexDirection: "row", flexGrow: 1, alignItems: "flex-end", justifyContent: "flex-end" }}>{user && <Voting id={id} userID={user.uid} />}</div>
           </div>
         )}
 
@@ -52,9 +50,7 @@ const TaskCard = forwardRef(({ task, id, user }, ref) => {
           </IconButton>
           <h4 style={{ margin: 0, color: "#348feb" }}>{capitalizeFirstLetter(displayName)} &#xb7; </h4>
           <p style={{ margin: 0, marginLeft: 5, fontSize: 13, color: "#348feb" }}>{timeDiff} </p>
-          <div style={{ marginRight: "auto", display: "flex", flexDirection: "row", flexGrow: 1, alignItems: "flex-end", justifyContent: "flex-end" }}>
-            <Voting id={id} userID={user.uid} />
-          </div>
+          <div style={{ marginRight: "auto", display: "flex", flexDirection: "row", flexGrow: 1, alignItems: "flex-end", justifyContent: "flex-end" }}>{user && <Voting id={id} userID={user.uid} />}</div>
         </div>
         <div onClick={() => history.push("/task/" + id)} className="task_info_container">
           <div className="task_title">
