@@ -72,7 +72,8 @@ function Home() {
       .orderBy(sorting, ascDesc)
       .startAfter(lastEntry)
       .limit(5)
-      .onSnapshot((snapshot) => {
+      .get()
+      .then((snapshot) => {
         setTasks(tasks.concat(snapshot.docs.map((doc) => ({ id: doc.id, task: doc.data() }))));
         setLastEntry(snapshot.docs[snapshot.docs.length - 1]);
         if (snapshot.docs.length <= 0) {

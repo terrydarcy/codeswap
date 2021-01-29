@@ -37,7 +37,7 @@ export const getTimeDiff = (time0) => {
       return ret;
     }
 
-    if (isHours && prevNum > 24) {
+    if (isHours && prevNum >= 24) {
       prevNum = Math.floor(hoursTimeDiff / 24);
       if (prevNum === 1) {
         ret = String(Math.floor(hoursTimeDiff / 24)) + " day ago";
