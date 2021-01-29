@@ -17,19 +17,24 @@ const TaskCard = forwardRef(({ task, id, user }, ref) => {
 
   useEffect(() => {
     var docRef = firebase.firestore().collection("Users").doc(task.postedBy);
-    setTimeDiff(getTimeDiff(task.timestampPosted));
-    docRef
-      .get()
-      .then(function (doc) {
-        if (doc.exists) {
-          setPhotoURL(doc.data().photoURL);
-          setDisplayName(doc.data().displayName);
-        } else {
-        }
-      })
-      .catch(function (error) {
-        console.log("Error getting document:", error);
-      });
+    var unmounted = false;
+    if (!unmounted) {
+      setTimeDiff(getTimeDiff(task.timestampPosted));
+      docRef
+        .get()
+        .then(function (doc) {
+          if (doc.exists) {
+            setPhotoURL(doc.data().photoURL);
+            setDisplayName(doc.data().displayName);
+          } else {
+          }
+        })
+        .catch(function (error) {
+          console.log("Error getting document:", error);
+        });
+    }
+
+    return () => (unmounted = true);
   }, []);
 
   const profileLoadingStyle = !loaded ? { display: "none" } : {};
@@ -40,7 +45,8 @@ const TaskCard = forwardRef(({ task, id, user }, ref) => {
         {!loaded && (
           <div className="rounded_profile_task_container">
             <img className="" src={loadingImage} />
-            <div style={{ marginRight: "auto", display: "flex", flexDirection: "row", flexGrow: 1, alignItems: "flex-end", justifyContent: "flex-end" }}>{user && <Voting id={id} userID={user.uid} />}</div>
+            {user && <Voting id={id} userID={user.uid} />}
+            {!user && <Voting id={id} userID={null} />}
           </div>
         )}
 
@@ -50,7 +56,8 @@ const TaskCard = forwardRef(({ task, id, user }, ref) => {
           </IconButton>
           <h4 style={{ margin: 0, color: "#348feb" }}>{capitalizeFirstLetter(displayName)} &#xb7; </h4>
           <p style={{ margin: 0, marginLeft: 5, fontSize: 13, color: "#348feb" }}>{timeDiff} </p>
-          <div style={{ marginRight: "auto", display: "flex", flexDirection: "row", flexGrow: 1, alignItems: "flex-end", justifyContent: "flex-end" }}>{user && <Voting id={id} userID={user.uid} />}</div>
+          {user && <Voting id={id} userID={user.uid} />}
+          {!user && <Voting id={id} userID={null} />}
         </div>
         <div onClick={() => history.push("/task/" + id)} className="task_info_container">
           <div className="task_title">

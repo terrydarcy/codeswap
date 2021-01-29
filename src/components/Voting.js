@@ -1,43 +1,57 @@
 import React, { forwardRef, useEffect, useState } from "react";
-import "./styles/VotingUI.css";
+import "./styles/Voting.css";
 import upVoteImg from "../res/upVoteImg.png";
 import downVoteImg from "../res/downVoteImg.png";
 import firebase from "firebase";
-
+import { useHistory } from "react-router";
 import downVotedDisabled from "../res/downVotedDisabled.png";
 import upVotedDisabled from "../res/upVotedDisabled.png";
-import { setUpVoted } from "../redux/actions";
 
 const Voting = forwardRef(({ id, userID }, ref) => {
   const [upVotedCheck, setUpVotedCheck] = useState(false);
+  const [voteCount, setVoteCount] = useState(0);
   const [downVotedCheck, setDownVotedCheck] = useState(false);
+  let history = useHistory();
 
   useEffect(() => {
     let unmounted = false;
+    if (userID) {
+      isUpVoted(id, userID).then(function (result) {
+        if (result) {
+          if (!unmounted) {
+            setUpVotedCheck(true);
+          }
+        } else {
+          if (!unmounted) {
+            setUpVotedCheck(false);
+          }
+        }
+      });
 
-    isUpVoted(id, userID).then(function (result) {
-      if (result) {
-        if (!unmounted) {
-          setUpVotedCheck(true);
+      isDownVoted(id, userID).then(function (result) {
+        if (result) {
+          if (!unmounted) {
+            setDownVotedCheck(true);
+          }
+        } else {
+          if (!unmounted) {
+            setDownVotedCheck(false);
+          }
         }
-      } else {
-        if (!unmounted) {
-          setUpVotedCheck(false);
-        }
-      }
-    });
+      });
+    }
 
-    isDownVoted(id, userID).then(function (result) {
-      if (result) {
+    firebase
+      .firestore()
+      .collection("tasks")
+      .doc(id)
+      .onSnapshot((snapshot) => {
+        var upVoteLength = snapshot.data().upVoted.length;
+        var downVoteLength = snapshot.data().downVoted.length;
         if (!unmounted) {
-          setDownVotedCheck(true);
+          setVoteCount(upVoteLength - downVoteLength);
         }
-      } else {
-        if (!unmounted) {
-          setDownVotedCheck(false);
-        }
-      }
-    });
+      });
     return () => {
       unmounted = true;
     };
@@ -63,29 +77,43 @@ const Voting = forwardRef(({ id, userID }, ref) => {
   };
 
   const upVote = (taskID, userID) => {
-    isUpVoted(taskID, userID).then(function (result) {
-      if (!result) {
+    if (userID) {
+      isUpVoted(taskID, userID).then(function (result) {
+        if (!result) {
+          firebase
+            .firestore()
+            .collection("tasks")
+            .doc(taskID)
+            .update({
+              upVoted: firebase.firestore.FieldValue.arrayUnion(userID),
+              downVoted: firebase.firestore.FieldValue.arrayRemove(userID),
+            });
+          setUpVotedCheck(true);
+          setDownVotedCheck(false);
+        } else {
+          firebase
+            .firestore()
+            .collection("tasks")
+            .doc(taskID)
+            .update({
+              upVoted: firebase.firestore.FieldValue.arrayRemove(userID),
+            });
+          setUpVotedCheck(false);
+        }
         firebase
           .firestore()
           .collection("tasks")
           .doc(taskID)
-          .update({
-            upVoted: firebase.firestore.FieldValue.arrayUnion(userID),
-            downVoted: firebase.firestore.FieldValue.arrayRemove(userID),
+          .get()
+          .then(function (doc) {
+            var upVoteLength = doc.data().upVoted.length;
+            var downVoteLength = doc.data().downVoted.length;
+            setVoteCount(upVoteLength - downVoteLength);
           });
-        setUpVotedCheck(true);
-        setDownVotedCheck(false);
-      } else {
-        firebase
-          .firestore()
-          .collection("tasks")
-          .doc(taskID)
-          .update({
-            upVoted: firebase.firestore.FieldValue.arrayRemove(userID),
-          });
-        setUpVotedCheck(false);
-      }
-    });
+      });
+    } else {
+      history.push("/login");
+    }
   };
 
   const isDownVoted = async (taskID, userID) => {
@@ -108,38 +136,57 @@ const Voting = forwardRef(({ id, userID }, ref) => {
   };
 
   const downVote = (taskID, userID) => {
-    isDownVoted(taskID, userID).then(function (result) {
-      if (!result) {
+    if (userID) {
+      isDownVoted(taskID, userID).then(function (result) {
+        if (!result) {
+          firebase
+            .firestore()
+            .collection("tasks")
+            .doc(taskID)
+            .update({
+              downVoted: firebase.firestore.FieldValue.arrayUnion(userID),
+              upVoted: firebase.firestore.FieldValue.arrayRemove(userID),
+            });
+          setDownVotedCheck(true);
+          setUpVotedCheck(false);
+          setVoteCount(voteCount - 1);
+        } else {
+          firebase
+            .firestore()
+            .collection("tasks")
+            .doc(taskID)
+            .update({
+              downVoted: firebase.firestore.FieldValue.arrayRemove(userID),
+            });
+          setDownVotedCheck(false);
+          setVoteCount(voteCount + 1);
+        }
         firebase
           .firestore()
           .collection("tasks")
           .doc(taskID)
-          .update({
-            downVoted: firebase.firestore.FieldValue.arrayUnion(userID),
-            upVoted: firebase.firestore.FieldValue.arrayRemove(userID),
+          .get()
+          .then(function (doc) {
+            var upVoteLength = doc.data().upVoted.length;
+            var downVoteLength = doc.data().downVoted.length;
+            setVoteCount(upVoteLength - downVoteLength);
           });
-        setDownVotedCheck(true);
-        setUpVotedCheck(false);
-      } else {
-        firebase
-          .firestore()
-          .collection("tasks")
-          .doc(taskID)
-          .update({
-            downVoted: firebase.firestore.FieldValue.arrayRemove(userID),
-          });
-        setDownVotedCheck(false);
-      }
-    });
-
-    return () => {};
+      });
+    } else {
+      history.push("/login");
+    }
   };
 
   return (
-    <div ref={ref}>
-      {upVotedCheck ? <img className="upVote" src={upVoteImg} alt="up vote" onClick={() => upVote(id, userID)} /> : <img className="upVote" src={upVotedDisabled} alt="up vote" onClick={() => upVote(id, userID)} />}
+    <div ref={ref} className="voting_container">
+      {upVotedCheck ? <img className="upVote" src={upVoteImg} alt="up vote" onClick={() => upVote(id, userID)} width="30" height="30" /> : <img className="upVote" src={upVotedDisabled} alt="up vote" onClick={() => upVote(id, userID)} width="30" height="30" />}
 
-      {downVotedCheck ? <img className="upVote" style={{ marginLeft: 10 }} src={downVoteImg} alt="down vote" onClick={() => downVote(id, userID)} /> : <img className="downVote" src={downVotedDisabled} style={{ marginLeft: 10 }} alt="down vote" onClick={() => downVote(id, userID)} />}
+      <h4 style={{ width: 30, display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <span style={{ color: "#d9215a" }}>{voteCount < 0 && voteCount}</span>
+        <span style={{ color: "#42c062" }}>{voteCount >= 0 && voteCount}</span>
+      </h4>
+
+      {downVotedCheck ? <img className="upVote" src={downVoteImg} alt="down vote" width="30" height="30" onClick={() => downVote(id, userID)} /> : <img className="downVote" src={downVotedDisabled} alt="down vote" onClick={() => downVote(id, userID)} width="30" height="30" />}
     </div>
   );
 });

@@ -13,48 +13,47 @@ function Home() {
   const [tasks, setTasks] = useState([]);
   let history = useHistory();
 
-  const firstLoad = firebase.firestore().collection("tasks").orderBy("timestampPosted", "desc").limit(4);
-
-  const [lastEntry, setLastEntry] = useState([null]);
-  const [hasMore, setHasMore] = useState(firstLoad);
+  const [lastEntry, setLastEntry] = useState(null);
+  const [hasMore, setHasMore] = useState(true);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    if (user) {
-      const { email, displayName, photoURL } = user;
-    }
-    return setLoaded(true);
-  }, [user]);
+    var unmounted = false;
 
-  useEffect(() => {
-    firebase
-      .firestore()
-      .collection("tasks")
-      .orderBy("timestampPosted", "desc")
-      .limit(4)
-      .onSnapshot((snapshot) => {
-        setTasks(snapshot.docs.map((doc) => ({ id: doc.id, task: doc.data() })));
-        setLastEntry(snapshot.docs[snapshot.docs.length - 1]);
-      });
-  }, []);
-
-  const fetchMoreData = async () => {
-    if (hasMore) {
+    if (!unmounted) {
+      console.log("test");
       firebase
         .firestore()
         .collection("tasks")
         .orderBy("timestampPosted", "desc")
-        .startAfter(lastEntry)
-        .limit(3)
-        .onSnapshot((snapshot) => {
-          setTasks(tasks.concat(snapshot.docs.map((doc) => ({ id: doc.id, task: doc.data() }))));
+        .limit(4)
+        .get()
+        .then((snapshot) => {
+          console.log(snapshot);
+          setTasks(snapshot.docs.map((doc) => ({ id: doc.id, task: doc.data() })));
           setLastEntry(snapshot.docs[snapshot.docs.length - 1]);
-
-          if (snapshot.docs.length <= 0) {
-            setHasMore(false);
-          }
+          setHasMore(true);
         });
     }
+
+    return () => (unmounted = true);
+  }, []);
+
+  const fetchMoreData = async () => {
+    firebase
+      .firestore()
+      .collection("tasks")
+      .orderBy("timestampPosted", "desc")
+      .startAfter(lastEntry)
+      .limit(5)
+      .onSnapshot((snapshot) => {
+        setTasks(tasks.concat(snapshot.docs.map((doc) => ({ id: doc.id, task: doc.data() }))));
+        setLastEntry(snapshot.docs[snapshot.docs.length - 1]);
+
+        if (snapshot.docs.length <= 0) {
+          setHasMore(false);
+        }
+      });
   };
   return (
     <div className="Home" id="home">
@@ -91,7 +90,7 @@ function Home() {
       <InfiniteScroll
         dataLength={tasks.length}
         next={fetchMoreData}
-        width="100%"
+        style={{ overflow: "show" }}
         hasMore={hasMore}
         endMessage={
           <p style={{ textAlign: "center" }}>
