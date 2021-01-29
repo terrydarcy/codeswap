@@ -113,32 +113,31 @@ function Home() {
       )}
       <h1 style={{ marginBottom: 0 }}>The Stack</h1>
 
-      <div className="sorting_container">
-        {sorting == "timestampPosted" && (
-          <div>
-            <Button variant="outlined" className={classes.sortButtonEnabled} onClick={() => sortNew()}>
-              <NewReleasesIcon style={{ marginRight: 10, fontSize: 20 }} />
-              New
-            </Button>
-            <Button variant="outlined" className={classes.sortButton} onClick={() => sortTop()}>
-              <TrendingUpIcon style={{ marginRight: 10, fontSize: 20 }} />
-              Top
-            </Button>
-          </div>
-        )}
-        {sorting == "voteCount" && (
-          <div>
-            <Button variant="outlined" className={classes.sortButton} onClick={() => sortNew()}>
-              <NewReleasesIcon style={{ marginRight: 10, fontSize: 20 }} />
-              New
-            </Button>
-            <Button variant="outlined" className={classes.sortButtonEnabled} onClick={() => sortTop()}>
-              <TrendingUpIcon style={{ marginRight: 10, fontSize: 20 }} />
-              Top
-            </Button>
-          </div>
-        )}
-      </div>
+      {sorting == "timestampPosted" && (
+        <div className="sorting_container">
+          <button className="sortButtonActivated" onClick={() => sortNew()} style={{ marginRight: 15 }}>
+            <NewReleasesIcon style={{ marginRight: 10, fontSize: 20 }} />
+            New
+          </button>
+          <button className="sortButton" onClick={() => sortTop()}>
+            <TrendingUpIcon style={{ marginRight: 10, fontSize: 20 }} />
+            Top
+          </button>
+        </div>
+      )}
+      {sorting == "voteCount" && (
+        <div className="sorting_container">
+          <button className="sortButton" onClick={() => sortNew()} style={{ marginRight: 15 }}>
+            <NewReleasesIcon style={{ marginRight: 10, fontSize: 20 }} />
+            New
+          </button>
+          <button className="sortButtonActivated" onClick={() => sortTop()}>
+            <TrendingUpIcon style={{ marginRight: 10, fontSize: 20 }} />
+            Top
+          </button>
+        </div>
+      )}
+
       <br />
       <InfiniteScroll
         dataLength={tasks.length}
@@ -162,25 +161,25 @@ function Home() {
 const useStyles = makeStyles((theme) => ({
   sortButtonEnabled: {
     fontFamily: "Consolas",
-    minWidth: 90,
+    minWidth: 80,
     fontSize: 12,
     borderRadius: 10,
     backgroundColor: "#42c062",
     color: "#e6e6e6",
-    padding: 3,
+    padding: 2,
     margin: 10,
-    height: 40,
+    height: 35,
   },
   sortButton: {
     fontFamily: "Consolas",
-    minWidth: 90,
+    minWidth: 80,
     fontSize: 12,
     borderRadius: 10,
     backgroundColor: "#1c222b",
     color: "#e6e6e6",
-    padding: 3,
+    padding: 2,
     margin: 10,
-    height: 40,
+    height: 35,
   },
 }));
 export default Home;

@@ -68,3 +68,31 @@ h4 {
 .loading {
   position: relative;
 }
+.sortButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  border-radius: 10px;
+  border: none;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  background-color: #1c222b;
+  color: #e6e6e6;
+}
+.sortButtonActivated {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  border-radius: 10px;
+  border: none;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  background-color: #42c062;
+  color: #e6e6e6;
+}
