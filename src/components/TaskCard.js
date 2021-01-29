@@ -20,19 +20,20 @@ const TaskCard = forwardRef(({ task, id, user }, ref) => {
     var unmounted = false;
     if (!unmounted) {
       setTimeDiff(getTimeDiff(task.timestampPosted));
-      docRef
-        .get()
-        .then(function (doc) {
-          if (doc.exists) {
+    }
+    docRef
+      .get()
+      .then(function (doc) {
+        if (doc.exists) {
+          if (!unmounted) {
             setPhotoURL(doc.data().photoURL);
             setDisplayName(doc.data().displayName);
-          } else {
           }
-        })
-        .catch(function (error) {
-          console.log("Error getting document:", error);
-        });
-    }
+        }
+      })
+      .catch(function (error) {
+        console.log("Error getting document:", error);
+      });
 
     return () => (unmounted = true);
   }, [task.timestampPosted, task.postedBy]);

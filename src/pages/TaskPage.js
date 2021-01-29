@@ -84,16 +84,22 @@ function TaskPage() {
   }, [st.id]);
 
   useEffect(() => {
-    firebase
-      .firestore()
-      .collection("comments")
-      .orderBy("timestampPosted", "desc")
-      .limit(10)
-      .where("taskID", "==", st.id)
-      .onSnapshot((snapshot) => {
-        setCommentList(snapshot.docs.map((doc) => ({ id: doc.id, comment: doc.data() })));
-        setLastEntry(snapshot.docs[snapshot.docs.length - 1]);
-      });
+    var unmounted = false;
+    if (!unmounted) {
+      firebase
+        .firestore()
+        .collection("comments")
+        .orderBy("timestampPosted", "desc")
+        .limit(5)
+        .where("taskID", "==", st.id)
+        .get()
+        .then((snapshot) => {
+          setCommentList(snapshot.docs.map((doc) => ({ id: doc.id, comment: doc.data() })));
+          setLastEntry(snapshot.docs[snapshot.docs.length - 1]);
+          setHasMore(true);
+        });
+    }
+    return () => (unmounted = true);
   }, [st.id]);
 
   const addComment = () => {
@@ -225,4 +231,5 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 12,
   },
 }));
+
 export default TaskPage;

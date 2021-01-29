@@ -1,43 +1,75 @@
 import React, { useContext, useState, useEffect } from "react";
 import "./styles/Home.css";
-import { Button } from "@material-ui/core";
+import { Button, makeStyles } from "@material-ui/core";
 import { UserContext } from "../providers/UserProvider";
 import TaskCard from "../components/TaskCard";
 import firebase from "firebase";
 import { useHistory } from "react-router";
 import InfiniteScroll from "react-infinite-scroll-component";
 import pacmanLoading from "../res/pacman.svg";
+import NewReleasesIcon from "@material-ui/icons/NewReleases";
+import TrendingUpIcon from "@material-ui/icons/TrendingUp";
 
 function Home() {
   const user = useContext(UserContext);
   const [tasks, setTasks] = useState([]);
   const [lastEntry, setLastEntry] = useState(null);
   const [hasMore, setHasMore] = useState(true);
+  const [sorting, setSorting] = useState("");
+  const [ascDesc, setAscDesc] = useState("desc");
   let history = useHistory();
+  const classes = useStyles();
 
   useEffect(() => {
     var unmounted = false;
     if (!unmounted) {
-      firebase
-        .firestore()
-        .collection("tasks")
-        .orderBy("timestampPosted", "desc")
-        .limit(4)
-        .get()
-        .then((snapshot) => {
-          setTasks(snapshot.docs.map((doc) => ({ id: doc.id, task: doc.data() })));
-          setLastEntry(snapshot.docs[snapshot.docs.length - 1]);
-          setHasMore(true);
-        });
+      sortNew();
     }
     return () => (unmounted = true);
   }, []);
 
-  const fetchMoreData = async () => {
+  const sortNew = async () => {
+    if (sorting !== "timestampPosted") {
+      setHasMore(true);
+      setSorting("timestampPosted");
+      setAscDesc("desc");
+      await firebase
+        .firestore()
+        .collection("tasks")
+        .orderBy("timestampPosted", "desc")
+        .limit(5)
+        .get()
+        .then((snapshot) => {
+          setTasks(snapshot.docs.map((doc) => ({ id: doc.id, task: doc.data() })));
+          setLastEntry(snapshot.docs[snapshot.docs.length - 1]);
+        });
+    }
+  };
+
+  const sortTop = async () => {
+    if (sorting !== "voteCount") {
+      setHasMore(true);
+      setSorting("voteCount");
+      setAscDesc("desc");
+      await firebase
+        .firestore()
+        .collection("tasks")
+        .orderBy("voteCount", "desc")
+        .limit(5)
+        .get()
+        .then((snapshot) => {
+          console.log();
+          setTasks(snapshot.docs.map((doc) => ({ id: doc.id, task: doc.data() })));
+          setLastEntry(snapshot.docs[snapshot.docs.length - 1]);
+        });
+    }
+  };
+
+  const fetchMoreData = () => {
     firebase
       .firestore()
       .collection("tasks")
-      .orderBy("timestampPosted", "desc")
+      .orderBy(sorting, ascDesc)
       .startAfter(lastEntry)
       .limit(5)
       .onSnapshot((snapshot) => {
@@ -79,6 +111,33 @@ function Home() {
         </div>
       )}
       <h1 style={{ marginBottom: 0 }}>The Stack</h1>
+
+      <div className="sorting_container">
+        {sorting == "timestampPosted" && (
+          <div>
+            <Button variant="outlined" className={classes.sortButtonEnabled} onClick={() => sortNew()}>
+              <NewReleasesIcon style={{ marginRight: 10, fontSize: 20 }} />
+              New
+            </Button>
+            <Button variant="outlined" className={classes.sortButton} onClick={() => sortTop()}>
+              <TrendingUpIcon style={{ marginRight: 10, fontSize: 20 }} />
+              Top
+            </Button>
+          </div>
+        )}
+        {sorting == "voteCount" && (
+          <div>
+            <Button variant="outlined" className={classes.sortButton} onClick={() => sortNew()}>
+              <NewReleasesIcon style={{ marginRight: 10, fontSize: 20 }} />
+              New
+            </Button>
+            <Button variant="outlined" className={classes.sortButtonEnabled} onClick={() => sortTop()}>
+              <TrendingUpIcon style={{ marginRight: 10, fontSize: 20 }} />
+              Top
+            </Button>
+          </div>
+        )}
+      </div>
       <br />
       <InfiniteScroll
         dataLength={tasks.length}
@@ -99,5 +158,28 @@ function Home() {
     </div>
   );
 }
-
+const useStyles = makeStyles((theme) => ({
+  sortButtonEnabled: {
+    fontFamily: "Consolas",
+    minWidth: 90,
+    fontSize: 12,
+    borderRadius: 10,
+    backgroundColor: "#42c062",
+    color: "#e6e6e6",
+    padding: 3,
+    margin: 10,
+    height: 40,
+  },
+  sortButton: {
+    fontFamily: "Consolas",
+    minWidth: 90,
+    fontSize: 12,
+    borderRadius: 10,
+    backgroundColor: "#1c222b",
+    color: "#e6e6e6",
+    padding: 3,
+    margin: 10,
+    height: 40,
+  },
+}));
 export default Home;

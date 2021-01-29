@@ -108,6 +108,13 @@ const Voting = forwardRef(({ id, userID }, ref) => {
           .then(function (doc) {
             var upVoteLength = doc.data().upVoted.length;
             var downVoteLength = doc.data().downVoted.length;
+            firebase
+              .firestore()
+              .collection("tasks")
+              .doc(taskID)
+              .update({
+                voteCount: upVoteLength - downVoteLength,
+              });
             setVoteCount(upVoteLength - downVoteLength);
           });
       });
@@ -169,6 +176,13 @@ const Voting = forwardRef(({ id, userID }, ref) => {
           .then(function (doc) {
             var upVoteLength = doc.data().upVoted.length;
             var downVoteLength = doc.data().downVoted.length;
+            firebase
+              .firestore()
+              .collection("tasks")
+              .doc(taskID)
+              .update({
+                voteCount: upVoteLength - downVoteLength,
+              });
             setVoteCount(upVoteLength - downVoteLength);
           });
       });

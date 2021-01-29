@@ -66,6 +66,9 @@ function AddTask() {
               taskTags: parseTags(taskTags),
               timestampPosted: firebase.firestore.FieldValue.serverTimestamp(),
               postedBy: user.uid,
+              upVoted: [],
+              downVoted: [],
+              voteCount: 0,
             });
           setTaskTitle("");
           setTaskSubject("");
