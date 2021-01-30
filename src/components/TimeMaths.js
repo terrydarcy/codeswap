@@ -7,7 +7,6 @@ export const getTimeDiff = (time0) => {
       prevNum,
       ret,
       isHours = false;
-
     if (secsTimeDiff < 30) {
       return "Just now";
     }
@@ -46,5 +45,7 @@ export const getTimeDiff = (time0) => {
       }
     }
     return ret;
+  } else {
+    return "Just now";
   }
 };

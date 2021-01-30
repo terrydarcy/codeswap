@@ -120,6 +120,18 @@ function TaskPage() {
         });
         setComment("");
         document.getElementById("comment").value = "";
+        firebase
+          .firestore()
+          .collection("comments")
+          .orderBy("timestampPosted", "desc")
+          .limit(5)
+          .where("taskID", "==", st.id)
+          .get()
+          .then((snapshot) => {
+            setCommentList(snapshot.docs.map((doc) => ({ id: doc.id, comment: doc.data() })));
+            setLastEntry(snapshot.docs[snapshot.docs.length - 1]);
+            setHasMore(true);
+          });
       }
     } else {
       document.getElementById("error").innerHTML = "Please <a style=' color: #e6e6e6;' href='/login'>login here</a> to post comments";

@@ -68,11 +68,11 @@ const Comment = forwardRef(({ comment, id }, ref) => {
 
   useEffect(() => {
     var docRef = firebase.firestore().collection("Users").doc(comment.postedBy);
-    setTimeDiff(getTimeDiff(comment.timestampPosted));
     docRef
       .get()
       .then(function (doc) {
         if (doc.exists) {
+          setTimeDiff(getTimeDiff(comment.timestampPosted));
           setPhotoURL(doc.data().photoURL);
           setDisplayName(doc.data().displayName);
         } else {
