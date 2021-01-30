@@ -29,11 +29,11 @@ const Reply = forwardRef(({ reply, id }, ref) => {
     <div ref={ref} className="reply_container">
       <div className="reply">
         <div style={{ display: "flex", flexDirection: "row" }}>
-          <h4 style={{ margin: 0, color: "#42c062", fontSize: 14 }}>{capitalizeFirstLetter(displayName)} &#xb7;</h4>
-          <p style={{ margin: 0, marginLeft: 5, fontSize: 12, color: "#42c062" }}>{timeDiff}</p>
+          <h4 style={{ margin: 0, color: "#42c062", fontSize: 15 }}>{capitalizeFirstLetter(displayName)} &#xb7;</h4>
+          <p style={{ margin: 0, marginLeft: 5, fontSize: 14, color: "#42c062" }}>{timeDiff}</p>
         </div>
 
-        <p style={{ margin: 0, fontSize: 14 }}>{capitalizeFirstLetter(reply.reply)}</p>
+        <p style={{ margin: 0, fontSize: 13 }}>{capitalizeFirstLetter(reply.reply)}</p>
       </div>
     </div>
   );
