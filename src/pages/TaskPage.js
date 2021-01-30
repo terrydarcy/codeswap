@@ -208,7 +208,7 @@ function TaskPage() {
           <br />
 
           <div className="comment_container">
-            <InfiniteScroll dataLength={commentList.length} next={fetchMoreData} style={{ overflow: "hide", width: "100%" }} hasMore={hasMore} endMessage={<p style={{ textAlign: "center" }}>You've reached the end of the comment stack!</p>} loader={<img src={pacmanLoading} alt="loading" width="100" />}>
+            <InfiniteScroll dataLength={commentList.length} next={fetchMoreData} style={{ width: "100%" }} hasMore={hasMore} endMessage={<p style={{ textAlign: "center" }}>You've reached the end of the comment stack!</p>} loader={<img src={pacmanLoading} alt="loading" width="100" />}>
               <h3>
                 Comments <small>(sorted by time posted)</small>
               </h3>

@@ -118,7 +118,9 @@ const Comment = forwardRef(({ comment, id }, ref) => {
           <h4 style={{ margin: 0, color: "#42c062" }}>{capitalizeFirstLetter(displayName)} &#xb7; </h4>
           <p style={{ margin: 0, marginLeft: 5, fontSize: 15, color: "#42c062" }}>{timeDiff}</p>
         </div>
-        <p style={{}}>{comment.comment}</p>
+        <div className="comment_text">
+          <p>{comment.comment}</p>
+        </div>
         {replyOpen && (
           <div className="reply_text_area">
             <textarea className="input_reply" type="text" rows="10" cols="100" id={id} placeholder="Start typing to comment" onChange={(e) => setReply(e.target.value)}></textarea>
