@@ -116,6 +116,7 @@ function TaskPage() {
           comment: comment,
           timestampPosted: firebase.firestore.FieldValue.serverTimestamp(),
           postedBy: user.uid,
+          replies: [],
         });
         setComment("");
         document.getElementById("comment").value = "";
@@ -133,24 +134,23 @@ function TaskPage() {
 
   const profileLoadingStyle = !loaded ? { display: "none" } : {};
   const fetchMoreData = async () => {
-    await setTimeout(() => {
-      firebase
-        .firestore()
-        .collection("comments")
-        .orderBy("timestampPosted", "desc")
-        .startAfter(lastEntry)
-        .limit(10)
-        .where("taskID", "==", st.id)
-        .onSnapshot((snapshot) => {
-          setCommentList(commentList.concat(snapshot.docs.map((doc) => ({ id: doc.id, comment: doc.data() }))));
+    firebase
+      .firestore()
+      .collection("comments")
+      .orderBy("timestampPosted", "desc")
+      .startAfter(lastEntry)
+      .limit(10)
+      .where("taskID", "==", st.id)
+      .get()
+      .then((snapshot) => {
+        setCommentList(commentList.concat(snapshot.docs.map((doc) => ({ id: doc.id, comment: doc.data() }))));
 
-          setLastEntry(snapshot.docs[snapshot.docs.length - 1]);
+        setLastEntry(snapshot.docs[snapshot.docs.length - 1]);
 
-          if (snapshot.docs.length <= 0) {
-            setHasMore(false);
-          }
-        });
-    }, 650);
+        if (snapshot.docs.length <= 0) {
+          setHasMore(false);
+        }
+      });
   };
   return (
     <div className="task">
@@ -169,7 +169,7 @@ function TaskPage() {
               <img className="rounded_profile_task" src={photoURL} onLoad={() => setLoaded(true)} alt="profile" />
             </IconButton>
             <h3 style={{ margin: 0, color: "#348feb" }}>{capitalizeFirstLetter(displayName)} &#xb7; </h3>
-            <p style={{ margin: 0, marginLeft: 5, color: "#348feb" }}>{timeDiff}</p>
+            <p style={{ margin: 0, marginLeft: 5, color: "#348feb", fontSize: 13 }}>{timeDiff}</p>
             {user && <Voting id={st.id} userID={user.uid} />}
             {!user && <Voting id={st.id} userID={null} />}
           </div>
@@ -208,12 +208,12 @@ function TaskPage() {
           <br />
 
           <div className="comment_container">
-            <InfiniteScroll dataLength={commentList.length} next={fetchMoreData} width="100%" hasMore={hasMore} endMessage={<p style={{ textAlign: "center" }}>You've reached the end of the comment stack!</p>} loader={<img src={pacmanLoading} alt="loading" width="100" />}>
+            <InfiniteScroll dataLength={commentList.length} next={fetchMoreData} style={{ overflow: "hide", width: "100%" }} hasMore={hasMore} endMessage={<p style={{ textAlign: "center" }}>You've reached the end of the comment stack!</p>} loader={<img src={pacmanLoading} alt="loading" width="100" />}>
               <h3>
-                Comment Stack <small>(sorted by time posted)</small>
+                Comments <small>(sorted by time posted)</small>
               </h3>
-              {commentList.map(({ comment, id }) => (
-                <Comment key={id} comment={comment} />
+              {commentList.map(({ id, comment }) => (
+                <Comment key={id} comment={comment} id={id} />
               ))}
             </InfiniteScroll>
           </div>

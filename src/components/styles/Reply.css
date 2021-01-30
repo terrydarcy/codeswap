@@ -1,0 +1,32 @@
+.reply_container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  flex-direction: column;
+  width: 100%;
+}
+.reply {
+  margin-top: 10px;
+  background-color: #1c222b;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  flex-direction: column;
+  padding-right: 10px;
+}
+.input_reply {
+  font-size: 13px;
+  border-width: 0px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #161b22;
+  color: #e6e6e6;
+  height: 100px;
+  resize: none;
+  box-sizing: border-box;
+  width: 90%;
+  max-width: 90%;
+  border-radius: 10px;
+}
